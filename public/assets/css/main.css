@@ -501,6 +501,9 @@ h6 {
   .navmenu .active:focus {
     color: var(--nav-dropdown-hover-color);
   }
+  .navmenu .active:focus {
+    color: var(--nav-dropdown-hover-color);
+  }
 
   .navmenu .active i,
   .navmenu .active:focus i {
@@ -522,7 +525,10 @@ h6 {
   .navmenu .dropdown ul ul {
     background-color: rgba(33, 37, 41, 0.1);
   }
-
+.navmenu .about>.about-active {
+    display: block;
+    background-color: rgba(33, 37, 41, 0.03);
+  }
   .navmenu .dropdown>.dropdown-active {
     display: block;
     background-color: rgba(33, 37, 41, 0.03);

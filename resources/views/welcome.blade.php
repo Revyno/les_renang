@@ -49,10 +49,15 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Team</a></li>
+          <li class="dropdown"><a href="#about"><span>About</span><i class="bi bi-chevron-down toggle-dropdown"></a></i>
+            <ul>
+          <li><a href="#tarif">Tarif</a></li>
+          <li><a href="#syarat-dan-ketentuan">Syarat & ketentuan</a></li>
+
+          </ul>
+          <li><a href="#services">Locations</a></li>
+          <li><a href="#portfolio">Pelajaran Berenang</a></li>
+          <li><a href="#team">Teacher</a></li>
           <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>

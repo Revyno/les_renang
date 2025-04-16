@@ -1,3 +1,5 @@
+<?php
+
 // app/Models/Registration.php
 namespace App\Models;
 
@@ -19,4 +21,5 @@ class Registration extends Model
         'tingkat_kemampuan',
         
     ];
+    
 }
