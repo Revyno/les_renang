@@ -19,6 +19,7 @@ class Registration extends Model
         'program',
         'jadwal',
         'tingkat_kemampuan',
+        'status',
         
     ];
     

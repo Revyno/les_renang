@@ -1,6 +1,6 @@
 <?
 // app/Http/Controllers/RegistrationController.php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\App;
 
 use Illuminate\Http\Request;
 use App\Models\Registration;
