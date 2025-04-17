@@ -1,4 +1,4 @@
-<?
+<?php
 // app/Http/Controllers/RegistrationController.php
 namespace App\Http\Controllers\App;
 
