@@ -131,31 +131,32 @@
             </div>
           </div>
         </div>
-        <div class="container">
+        {{-- <div class="container">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
             <div class="content image position-center mt-4">
             <div class="row justify-content-center">
               <div class="position-relative mt-4">
                 <img src="assets/img/about-2.jpg" class="img-fluid rounded-4 mb-4" alt="">
                 <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
-              </div>
+              </div> --}}
+            </div>
+            <div class="position-relative mt-4">
+              <video id="myVideo" width="1080" height="1080" controls class="video-fluid rounded-4">
+                <source src="assets/img/teacher/vid1.mp4" type="video/mp4">
+                Format anda tidak mendukung tag video.
+              </video>
+              <div class="pulsating-play-btn" onclick="document.getElementById('myVideo').play()"></div>
+            </div>
             </div>
           </div>
         </div>
         </div>
       </div>
 
-      </div>
-      {{-- <div class="position-relative mt-4">
-        <video id="myVideo" width="100%" class="img-fluid rounded-4">
-          <source src="assets/img/teacher/vid1.mp4" type="video/mp4">
-          Format anda tidak mendukung tag video.
-        </video>
-        <div class="pulsating-play-btn" onclick="document.getElementById('myVideo').play()"></div>
-      </div> --}}
+      
 
     </section><!-- /About Section -->
-
+{{-- 
     <!-- Stats Section -->
     <section id="stats" class="stats section light-background">
 
@@ -207,7 +208,7 @@
 
       </div>
 
-    </section><!-- /Stats Section -->
+    </section><!-- /Stats Section --> --}}
 
     <!-- Services Section -->
     <section id="services" class="services section">
@@ -215,7 +216,7 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Services</h2>
-        <p>Featured Srvices<br></p>
+        <p>Mengapa Memilih untuk Belajar Berenang di Tirta Nirwana<br></p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">

@@ -16,6 +16,7 @@ class RegistrationController extends Controller
             $query->where('nama', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%")
                 ->orWhere('no_telepon', 'like', "%{$search}%");
+                // ->orWhere('program', 'like', "%{$search}%");
         }
         
         if ($request->has('date_from') && $request->has('date_to')) {

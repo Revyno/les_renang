@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $registrationCount = Registration::count();
         $registrationToday = Registration::whereDate('created_at', today())->count();
         $programCount = Program::count();
-        $instructorCount = Teacher::count();
+        $TeacherCount = Teacher::count();
         
         $latestRegistrations = Registration::latest()->take(5)->get();
         
