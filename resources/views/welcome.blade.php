@@ -131,15 +131,15 @@
             </div>
           </div>
         </div>
-        {{-- <div class="container">
+        <div class="container">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
             <div class="content image position-center mt-4">
             <div class="row justify-content-center">
               <div class="position-relative mt-4">
                 <img src="assets/img/about-2.jpg" class="img-fluid rounded-4 mb-4" alt="">
                 <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
-              </div> --}}
-            </div>
+              </div>
+            {{-- </div>
             <div class="position-relative mt-4">
               <video id="myVideo" width="1080" height="1080" controls class="video-fluid rounded-4">
                 <source src="assets/img/teacher/vid1.mp4" type="video/mp4">
@@ -151,7 +151,7 @@
           </div>
         </div>
         </div>
-      </div>
+      </div> --}}
 
       
 

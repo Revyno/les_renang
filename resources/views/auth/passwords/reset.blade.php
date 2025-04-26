@@ -1,1 +1,1 @@
-@extends('adminlte::auth.passwords.reset')
+@extends('filament::auth.passwords.reset')

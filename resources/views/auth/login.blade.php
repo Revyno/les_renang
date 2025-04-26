@@ -1,1 +1,4 @@
-@extends('adminlte::auth.login')
+@extends('filament::auth.login')
+@error('loginError')
+    
+@enderror

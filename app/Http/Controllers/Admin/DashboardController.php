@@ -2,9 +2,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Instructor;
 use App\Models\Registration;
 use App\Models\Program;
-use App\Models\Teacher;
 
 class DashboardController extends Controller
 {
@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $registrationCount = Registration::count();
         $registrationToday = Registration::whereDate('created_at', today())->count();
         $programCount = Program::count();
-        $TeacherCount = Teacher::count();
+        $TeacherCount = Instructor::count();
         
         $latestRegistrations = Registration::latest()->take(5)->get();
         

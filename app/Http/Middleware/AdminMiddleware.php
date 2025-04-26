@@ -13,7 +13,7 @@ class AdminMiddleware
             return $next($request);
         }
         
-        return redirect('/')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+        return redirect('filament.auth.login')->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
     }
 }
 

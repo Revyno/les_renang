@@ -11,6 +11,7 @@ class Registration extends Model
     use HasFactory;
     
     protected $fillable = [
+        'name',
         'nama',
         'alamat',
         'no_telepon',
@@ -20,7 +21,26 @@ class Registration extends Model
         'jadwal',
         'tingkat_kemampuan',
         'status',
+        'program_id', 
+        'instructor_id', 
+        'start_date', 
+        'status', 
+        'notes'
         
     ];
-    
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo(Instructor::class);
+    }
+
+    public function user()
+    {
+        $this->belongsTo(User::class);
+    }
+
 }
