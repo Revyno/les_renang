@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PembayaranResource\Pages;
-use App\Filament\Resources\PembayaranResource\RelationManagers;
-use App\Models\Pembayaran;
+use App\Filament\Resources\SettingsResource\Pages;
+use App\Filament\Resources\SettingsResource\RelationManagers;
+use App\Models\Settings;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,13 +13,12 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PembayaranResource extends Resource
+class SettingsResource extends Resource
 {
-    protected static ?string $model = Pembayaran::class;
+    protected static ?string $model = Settings::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cash';
-    protected static ?string $navigationLabel = 'Pendapatan';
-    protected static ?string $navigationGroup = 'Keuangan';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -55,9 +54,9 @@ class PembayaranResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPembayarans::route('/'),
-            'create' => Pages\CreatePembayaran::route('/create'),
-            'edit' => Pages\EditPembayaran::route('/{record}/edit'),
+            'index' => Pages\ListSettings::route('/'),
+            'create' => Pages\CreateSettings::route('/create'),
+            'edit' => Pages\EditSettings::route('/{record}/edit'),
         ];
     }    
 }

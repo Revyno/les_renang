@@ -1,6 +1,5 @@
 <?php
 
-// app/Models/Registration.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,38 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Registration extends Model
 {
     use HasFactory;
-    
-    protected $fillable = [
-        'name',
-        'nama',
-        'alamat',
-        'no_telepon',
-        'email',
-        'usia',
-        'program',
-        'jadwal',
-        'tingkat_kemampuan',
-        'status',
-        'program_id', 
-        'instructor_id', 
-        'start_date', 
-        'status', 
-        'notes'
-        
-    ];
-    public function program()
+
+    protected $fillable = ['student_id', 'classes_id', 'registration_date', 'status'];
+
+    public function student()
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Student::class);
     }
 
-    public function instructor()
+    public function class()
     {
-        return $this->belongsTo(Instructor::class);
+        return $this->belongsTo(Classes::class, 'classes_id');
     }
-
-    public function user()
-    {
-        $this->belongsTo(User::class);
-    }
-
 }
+

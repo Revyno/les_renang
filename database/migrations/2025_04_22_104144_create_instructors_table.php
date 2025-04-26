@@ -17,9 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('email')->unique();
+            $table->date('tanggal_lahir');
+            $table->string('jenis_kelamin');
             $table->string('telepon')->nullable();
+            $table->string('alamat')->nullable(); 
             $table->string('spesialisasi')->nullable();
             $table->integer('pengalaman_tahun')->default(0);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

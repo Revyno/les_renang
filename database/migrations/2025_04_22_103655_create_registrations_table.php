@@ -13,11 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('registrations', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+       
+            Schema::create('registrations', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('students_id')->constrained()->onDelete('cascade');
+                $table->foreignId('classes_id')->constrained('classes')->onDelete('cascade');
+                $table->date('registration_date');
+                $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+                $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
