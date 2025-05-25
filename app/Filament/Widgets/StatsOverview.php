@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 use App\Models\Instructor;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\Registration;
 use App\Models\Booking;
 use App\Models\Payment;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -14,6 +15,24 @@ class StatsOverview extends BaseWidget
     protected function getCards(): array
     {
         return [
+              Card::make('Total Siswa', User::where('role', 'student')->count())
+                ->icon('heroicon-o-users')
+                ->color('primary'),
+                
+            // Pendaftaran Baru (Pending)
+            Card::make('Pendaftaran Baru', Registration::where('status', 'pending')->count())
+                ->icon('heroicon-o-clock')
+                ->color('warning'),
+                
+            // Pendaftaran Disetujui
+            Card::make('Pendaftaran Aktif', Registration::where('status', 'approved')->count())
+                ->icon('heroicon-o-check-circle')
+                ->color('success'),
+                
+            // Pembayaran Tertunda
+            Card::make('Pembayaran Tertunda', Registration::where('payment_status', 'pending')->count())
+                ->icon('heroicon-o-currency-dollar')
+                ->color('danger'),
             // Card::make('Total Murid', User::where('role', 'student')->count())
             //     ->description('Jumlah murid terdaftar')
             //     ->descriptionIcon('heroicon-o-users')

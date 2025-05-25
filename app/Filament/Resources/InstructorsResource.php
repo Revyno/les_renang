@@ -14,56 +14,62 @@ class InstructorsResource extends Resource
 {
     protected static ?string $model = Instructor::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Menagement';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nama')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->label('Nama'),
+                    
+                  
+                         Forms\Components\Select::make('jenis_kelamin')
+                             ->label('Jenis Kelamin')
+                             ->required()
+                             ->options([
+                             'Laki-laki' => 'Laki-laki',
+                            'Perempuan' => 'Perempuan',
+                                    ]),
 
-                Forms\Components\TextInput::make('email')
-                    ->email()
+              
+                    Forms\Components\TextInput::make('specialization')
                     ->required()
-                    ->unique(ignoreRecord: true),
-
-                Forms\Components\DatePicker::make('tanggal_lahir')
-                    ->label('Tanggal Lahir')
-                    ->required(),
-
-                Forms\Components\Select::make('jenis_kelamin')
-                    ->label('Jenis Kelamin')
+                    ->label('Spesialisasi')
+                    ->placeholder('Contoh: Renang Profesional'),
+                    
+                     Forms\Components\TextInput::make('certification')
                     ->required()
-                    ->options([
-                        'Laki-laki' => 'Laki-laki',
-                        'Perempuan' => 'Perempuan',
-                    ]),
-
-                Forms\Components\TextInput::make('telepon')
+                    ->maxLength(255)
+                    ->label('Sertifikasi'),
+                
+                    Forms\Components\TextInput::make('pengalaman_tahun')
+                    ->required()
+                    ->label('Pengalaman (Tahun)')
+                    ->numeric()
+                    ->default(0),
+                    
+                    Forms\Components\TextInput::make('telepon')
+                    ->required()
                     ->label('No. Telepon')
                     ->tel()
                     ->placeholder('08123456789'),
 
-                Forms\Components\TextInput::make('alamat')
-                    ->label('Alamat')
-                    ->placeholder('Jl. Raya No. 123'),
 
-                Forms\Components\TextInput::make('spesialisasi')
-                    ->label('Spesialisasi')
-                    ->placeholder('Contoh: Renang Profesional'),
+                       Forms\Components\Textarea::make('bio')
+                       ->required()
+                       ->label('Bio')
+                       ->required(),
 
-                Forms\Components\TextInput::make('pengalaman_tahun')
-                    ->label('Pengalaman (Tahun)')
-                    ->numeric()
-                    ->default(0),
-                Forms\Components\FileUpload::make('image')
-                ->image()
-                ->directory('products') // Direktori penyimpanan di storage/app/public
-                ->visibility('public')
-                ->maxSize(1024) // Ukuran maksimal dalam KB
+                        Forms\Components\FileUpload::make('photo')
+                            ->required() 
+                            ->image()
+                            ->directory('instructors')
+                            ->maxSize(1024),
+                        
+               
             ]);
     }
 
@@ -71,17 +77,14 @@ class InstructorsResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nama')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('tanggal_lahir')
-                    ->label('Tanggal Lahir')
-                    ->date(),
+                    
+                  
+                        // Tables\Columns\TextColumn::make('email')
+                        //     ->searchable()
+                        //     ->sortable(),
 
                 Tables\Columns\TextColumn::make('jenis_kelamin')
                     ->label('Jenis Kelamin'),
@@ -89,16 +92,25 @@ class InstructorsResource extends Resource
                 Tables\Columns\TextColumn::make('telepon')
                     ->label('No. Telepon'),
 
-                Tables\Columns\TextColumn::make('alamat')
-                    ->label('Alamat'),
+                // Tables\Columns\TextColumn::make('alamat')
+                //     ->label('Alamat'),
 
-                Tables\Columns\TextColumn::make('spesialisasi')
-                    ->label('Spesialisasi'),
-
+                Tables\Columns\TextColumn::make('specialization')
+                    ->label('Spesialisasi')
+                   ,
+                Tables\Columns\TextColumn::make('certification')
+                    ->label('Sertifikasi')
+                    ->searchable(),
+                
                 Tables\Columns\TextColumn::make('pengalaman_tahun')
                     ->label('Pengalaman (Tahun)'),
-                Tables\Columns\ImageColumn::make('image')
-                ->label('Image'),
+              
+               Tables\Columns\TextColumn::make('bio'),
+
+                Tables\Columns\ImageColumn::make('photo')->circular(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable(),
             ])
             ->filters([
                 // bisa ditambahkan filter kalau mau

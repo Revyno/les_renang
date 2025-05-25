@@ -1,1 +1,0 @@
-@extends('filament::auth.passwords.reset')

@@ -11,14 +11,25 @@ class Program extends Model
 
     protected $fillable = [
         'name',
-        'description',
-        'duration',
+        'age_range',
+        'day',
+        'schedule_date',
+        'schadule_end',
+        'start_time',
+        'end_time',
+        'capacity',
+        'toggle',
         'price',
-        'max_participants',
-        'schedule',
-        'level',
-        'status',
-        'image'
+        'description',
+        'thumbnail',
+        'class_id',
+        'instructor_id',
+    ];
+
+    protected $casts = [
+        'toggle' => 'boolean',
+        'price' => 'decimal:0',
+        'thumbnail' => 'array',
     ];
 
     /**
@@ -29,20 +40,22 @@ class Program extends Model
         return $this->hasMany(Registration::class);
     }
 
-    /**
-     * Get instructors assigned to this program
-     */
-    public function instructors()
-    {
-        return $this->belongsToMany(Instructor::class, 'program_instructor');
-    }
 
+    
+    /**
+     * Get instructor assigned to this program
+     */
+    public function instructor()
+    {
+        return $this->belongsTo(Instructor::class);
+    }
+   
     /**
      * Get active programs
      */
     public function scopeActive($query)
     {
-        return $query->where('status', 'active');
+        return $query->where('toggle', true);
     }
 
     /**
@@ -53,5 +66,15 @@ class Program extends Model
         return 'Rp ' . number_format($this->price, 0, ',', '.');
     }
 
-  
+    public function class()
+    {
+        return $this->belongsTo(Classes::class);
+    }
+    
+    
+
+    public function getAvailableSlotsAttribute()
+    {
+        return $this->capacity - $this->students()->count();
+    }
 }

@@ -207,3 +207,44 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+// baru
+/* public/assets/js/main.js */
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+    });
+
+    // WhatsApp Button Click Tracking
+    const whatsappButton = document.querySelector('.whatsapp-float');
+    if (whatsappButton) {
+        whatsappButton.addEventListener('click', function () {
+            console.log('WhatsApp button clicked');
+            // Optional: Google Analytics
+            // gtag('event', 'click', { 'event_category': 'WhatsApp', 'event_label': 'Floating Button' });
+        });
+    }
+
+    // Navmenu Toggle
+    const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+    function mobileNavToggle() {
+        document.body.classList.toggle('mobile-nav-active');
+        mobileNavToggleBtn.classList.toggle('bi-list');
+        mobileNavToggleBtn.classList.toggle('bi-x');
+    }
+    if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.addEventListener('click', mobileNavToggle);
+    }
+
+    // Preloader
+    const preloader = document.querySelector('#preloader');
+    if (preloader) {
+        window.addEventListener('load', () => {
+            preloader.remove();
+        });
+    }
+});

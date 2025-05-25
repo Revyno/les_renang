@@ -16,4 +16,17 @@ class EditJadwalLes extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+    protected function mutateFormDataBeforeSave(array $data): array
+{
+    $this->instructors = $data['instructors'] ?? [];
+
+    unset($data['instructors']);
+
+    return $data;
+}
+
+protected function afterSave(): void
+{
+    $this->record->instructors()->sync($this->instructors);
+}
 }

@@ -7,6 +7,41 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## 📦 Instalasi
+
+ 1. Clone Project
+
+```bash
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
+
+2. Install Dependency
+composer install
+npm install && npm run build
+
+
+3. Konfigurasi .env
+
+cp .env.example .env
+php artisan key:generate
+
+Ubah konfigurasi database di file .env:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=apotek_pintar
+DB_USERNAME=root
+DB_PASSWORD=
+
+4. Migrasi & Seeder
+php artisan migrate --seed
+
+🛠️ Instalasi Filament Admin
+composer require filament/filament:"^2.0"
+php artisan filament:install
+php artisan make:filament-user
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

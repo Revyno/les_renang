@@ -1,9 +1,19 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\StudentDashboardController;
+use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Livewire\ShowContactPage;
+use App\Http\Livewire\ShowHome;
+use App\Http\Livewire\ShowLogin;
+use App\Http\Livewire\ShowRegister;
+use App\Http\Livewire\Aboutsection;
+use App\Livewire\ShowBlogDetail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ProgramLes;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,37 +25,32 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get("/", [LoginController::class,"index"])->name("admin");
+Route::get('/', ShowHome::class)->name('home');
+Route::get('/program-les', ProgramLes::class)->name('programles');
+// Route::get('/instructors', Instructors::class)->name('instructors');
+// Route::get('/about', About::class)->name('about');
+// Route::get('/gallery', Gallery::class)->name('gallery');
+// Route::get('/blog', Blog::class)->name('blog');
+// Route::get('/contact', Contact::class)->name('contact');
+Route::get('/login', ShowLogin::class)->name('login');
+Route::get('/register', ShowRegister::class)->name('register');
+// Route::middleware(['auth'])->get('/dashboard', Dashboard::class)->name('dashboard');
 
-Route::get('/',[AuthController::class,'login']);
-Route::get('login', 'App\Http\Controllers\Auth\AuthController@showLoginForm')->name('login');
-Route::post('login', 'App\Http\Controllers\Auth\AuthController@login');
-Route::post('logout', 'App\Http\Controllers\Auth\AuthController@logout')->name('logout');
-
-// Route::get('','')->name('');
-
-Route::get('/', function () {
-    return view('welcome');
-});
-// Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-//     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-//     Route::resource('registrations', App\Http\Controllers\Admin\RegistrationController::class);
-//     Route::resource('programs', App\Http\Controllers\Admin\ProgramController::class);
-//     Route::resource('schedules', App\Http\Controllers\Admin\ScheduleController::class);
-//     Route::resource('instructors', App\Http\Controllers\Admin\InstructorController::class);
-//     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
-//     Route::get('/settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
-//     Route::post('/settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+// Route::prefix('admin')->group(function () {
+//     \Filament\Facades\Filament::routes();
 // });
 
-// Route::get('/', function () {
-//     return view('admin');
-// });
-// Route::get('/',[HomeController::class,'index']);
-Auth::routes();
+// Route::get('/', ShowHome::class)->name('home');
+// Route::get('/program-les', ProgramLes::class)->name('programles');
+// // Route::get('/instructors', Instructors::class)->name('instructors');
+// Route::get('/about', Aboutsection::class)->name('about');
+// // Route::get('/blog', ShowBlogDetail::class)->name('blog');
+// Route::get('/contact', ShowContactPage::class)->name('contact');
+// Route::get('/login', ShowLogin::class)->name('login');
+// Route::get('/register', ShowRegister::class)->name('register');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// // Admin Panel (Filament)
+// // Route::prefix('admin')->group(function () {
+// //     \Filament\Facades\Filament::routes();
+// // });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

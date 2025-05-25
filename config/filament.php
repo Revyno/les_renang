@@ -320,6 +320,10 @@ return [
     'middleware' => [
         'auth' => [
             Authenticate::class,
+            // 'guard' => 'web',
+            // 'pages' => [
+            // 'login' => \Filament\Http\Livewire\Auth\Login::class,
+            // ],
         ],
         'base' => [
             EncryptCookies::class,
