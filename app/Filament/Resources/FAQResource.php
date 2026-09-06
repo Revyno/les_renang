@@ -32,7 +32,7 @@ class FAQResource extends Resource
                 Select::make('status')->options([
                     1=>'Show',
                     0=>'Hide'
-                ])
+                ])->default(1)
             ]);
     }
 

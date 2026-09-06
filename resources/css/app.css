@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Brand palette derived from the Tirta Nirwana logo:
+       orange ring = primary, navy swimmer/ink = foreground, water blue = accent.
+       Primary/accent shades are darkened so white text meets WCAG AA (>=4.5:1). */
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 223 47% 14%;
+        --card: 0 0% 100%;
+        --card-foreground: 223 47% 14%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 223 47% 14%;
+        --primary: 24 84% 41%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 40% 96%;
+        --secondary-foreground: 223 40% 20%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 215 18% 42%;
+        --accent: 205 72% 45%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 72% 51%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 214 25% 89%;
+        --input: 214 25% 89%;
+        --ring: 24 84% 41%;
+        --radius: 0.75rem;
+    }
+
+    .dark {
+        --background: 222 44% 7%;
+        --foreground: 210 40% 96%;
+        --card: 222 38% 10%;
+        --card-foreground: 210 40% 96%;
+        --popover: 222 38% 10%;
+        --popover-foreground: 210 40% 96%;
+        --primary: 28 92% 55%;
+        --primary-foreground: 222 47% 9%;
+        --secondary: 217 28% 17%;
+        --secondary-foreground: 210 40% 96%;
+        --muted: 217 28% 15%;
+        --muted-foreground: 215 20% 65%;
+        --accent: 205 85% 60%;
+        --accent-foreground: 222 47% 9%;
+        --destructive: 0 62% 45%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217 28% 20%;
+        --input: 217 28% 20%;
+        --ring: 28 92% 55%;
+    }
+
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+        -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+        @apply bg-primary/20;
+    }
+}
+
+@layer components {
+    /* Rich text (admin-authored HTML) */
+    .rich {
+        @apply text-[15px] leading-relaxed text-muted-foreground;
+    }
+    .rich :where(h1, h2, h3, h4) {
+        @apply mt-8 mb-3 font-semibold text-foreground;
+    }
+    .rich h1 { @apply text-3xl; }
+    .rich h2 { @apply text-2xl; }
+    .rich h3 { @apply text-xl; }
+    .rich p { @apply my-4; }
+    .rich a { @apply font-medium text-primary underline underline-offset-4 hover:text-primary/80; }
+    .rich ul { @apply my-4 list-disc space-y-2 pl-6; }
+    .rich ol { @apply my-4 list-decimal space-y-2 pl-6; }
+    .rich img { @apply my-6 rounded-xl; }
+    .rich blockquote { @apply my-6 border-l-4 border-primary/40 pl-4 italic; }
+    .rich strong { @apply font-semibold text-foreground; }
+}
+
+/* Honor reduced-motion: kill entrance/hover transforms & smooth-scroll. */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .animate-fade-up {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

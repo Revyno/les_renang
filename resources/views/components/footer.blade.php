@@ -4,8 +4,9 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-lg-2 col-md-4 col-6 mb-4">
-                    <div class="footer-widget">
-                        <h5 class="mb-4 text-primary font-secondary">Service</h5>
+                     <div class="footer-widget">
+                        
+                        {{-- <h5 class="mb-4 text-primary font-secondary">Service</h5>
                         <ul class="list-unstyled">
                             <li class="mb-2"><a href="service-details.html">Digital Marketing</a>
                             </li>
@@ -17,20 +18,21 @@
                             </li>
                             <li class="mb-2"><a href="service-details.html">SEO</a>
                             </li>
-                        </ul>
-                    </div>
+                        </ul> --}}
+                    </div> 
                 </div>
                 <div class="col-lg-2 col-md-4 col-6 mb-4">
                     <div class="footer-widget">
                         <h5 class="mb-4 text-primary font-secondary">Quick Links</h5>
                         <ul class="list-unstyled">
-                            <li class="mb-2"><a href="#!">About Us</a>
+                            <li class="mb-2"><a href="{{ route('Home') }}">Home</a>
+                            <li class="mb-2"><a href="{{route('AboutUs')}}">About Us</a>
                             </li>
-                            <li class="mb-2"><a href="#!">Contact Us</a>
+                            <li class="mb-2"><a href="{{route('Blog')}}">Blog</a>
                             </li>
-                            <li class="mb-2"><a href="#!">Blog</a>
+                            <li class="mb-2"><a href="{{route('team')}}">Team</a>
                             </li>
-                            <li class="mb-2"><a href="#!">Team</a>
+                            <li class="mb-2"><a href="{{route('Contact')}}">Contact Us</a>
                             </li>
                         </ul>
                     </div>

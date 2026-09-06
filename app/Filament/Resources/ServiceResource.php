@@ -33,7 +33,7 @@ class ServiceResource extends Resource
                 TextInput::make('icon_class')->label('Icon'),
                 TextInput::make('short_desc')->label('Short description')->required(),
                 RichEditor::make('description')->columnSpan(2)->label('Description'),
-                Select::make('status')->options([1=>'Show',0=>'Hidden'])
+                Select::make('status')->options([1=>'Show',0=>'Hidden'])->default(1)
             ]);
     }
 

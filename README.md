@@ -1,66 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="public/front/images/logo-icon.png" width="120" alt="Logo Tirta Nirwana">
 </p>
 
-## About Laravel
+<h1 align="center">Tirta Nirwana — Company Profile & CMS</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  Website profil perusahaan sekolah renang <b>Tirta Nirwana</b> (Surabaya).<br>
+  Halaman publik modern (Inertia + React + TypeScript) dengan panel admin (Filament) untuk kelola konten.
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✨ Fitur
 
-## Learning Laravel
+- **Halaman publik**: Beranda, Layanan (+ detail), Blog (+ detail, filter kategori), Tentang Kami, Tim, FAQ, Kontak (form → email).
+- **Panel admin** di `/admin` (Filament) — CRUD untuk semua konten yang tampil di publik.
+- **Dark mode** (pre-paint, no flash), responsif, animasi hormati `prefers-reduced-motion`.
+- **Design system** berbasis token dari warna logo (orange + navy + water blue), kontras WCAG AA.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🧱 Stack
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+| Layer | Teknologi |
+|---|---|
+| Backend | PHP `^8.1`, Laravel `^10.10` |
+| Admin | Filament `^3.3` |
+| Frontend publik | Inertia.js `^2.0` + React `19` + TypeScript |
+| Styling | Tailwind `^3.1` + shadcn/ui (Radix + CVA) + lucide-react |
+| Build | Vite `^5` + `@vitejs/plugin-react` |
+| Auth | Laravel Breeze + Sanctum |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+> Halaman publik = React (Inertia). Panel admin = Filament (Livewire). Keduanya baca **model yang sama**; admin mengisi, publik menampilkan.
 
-## Laravel Sponsors
+## 🎨 Brand
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Palet diambil dari logo Tirta Nirwana dan didefinisikan sebagai token HSL di `resources/css/app.css`:
 
-### Premium Partners
+| Token | Peran | Sumber di logo |
+|---|---|---|
+| `--primary` | tombol/aksi (orange) | cincin oranye |
+| `--foreground` | teks/heading (navy) | perenang & tulisan |
+| `--accent` | sorotan (water blue) | air/percikan |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Ubah warna cukup di blok `:root` / `.dark` — seluruh komponen ikut otomatis.
 
-## Contributing
+## 🚀 Setup
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# 1. Dependencies
+composer install
+npm install
 
-## Code of Conduct
+# 2. Environment
+cp .env.example .env
+php artisan key:generate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 3. Database (set kredensial di .env dulu)
+php artisan migrate
 
-## Security Vulnerabilities
+# 4. Storage symlink (untuk gambar yang di-upload admin)
+php artisan storage:link
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Buat user admin (akses `/admin`):
 
-## License
+```bash
+php artisan make:filament-user
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🛠️ Development
+
+Jalankan **dua** proses:
+
+```bash
+npm run dev        # Vite dev server (HMR untuk React/CSS)
+php artisan serve  # atau biarkan Laragon yang serve
+```
+
+Build produksi:
+
+```bash
+npm run build
+```
+
+## 📂 Struktur
+
+```
+app/
+  Http/Controllers/PageController.php   # render semua halaman Inertia
+  Http/Controllers/ContactController.php# submit form kontak → email
+  Models/                              # AboutUs, Blogs, Categories, FAQ, Service, Teams, User
+  Filament/Resources/                 # CRUD admin per model
+resources/
+  js/Pages/                           # halaman React (Home, Services, Blogs, ...)
+  js/components/                       # Navbar, Footer, kartu, ui/ (shadcn)
+  css/app.css                         # token design system
+  views/app.blade.php                 # root template Inertia
+routes/web.php                        # rute publik → PageController
+routes/auth.php                       # rute Breeze
+public/front/                         # aset statis (logo, gambar)
+```
+
+Alur menambah section terkelola: **migration → model → Filament resource → halaman React**.
+
+## 🩺 Troubleshooting
+
+| Gejala | Sebab | Solusi |
+|---|---|---|
+| Halaman **blank** | `public/hot` basi (dev server mati) | hapus `public/hot`, atau jalankan `npm run dev` |
+| `@vitejs/plugin-react can't detect preamble` | `app.blade.php` kurang `@viteReactRefresh` | pastikan ada **sebelum** `@vite(...)` |
+| `Cannot read properties of null (reading 'component')` | protokol Inertia tak cocok (client baca `<script data-page>`) | `config/inertia.php` → `use_script_element_for_initial_page => true` |
+| Section publik kosong | DB belum ada data | isi konten via `/admin` |
+| Gambar admin 404 | belum ada symlink | `php artisan storage:link` |
+
+## 🧪 Quality
+
+```bash
+php artisan test      # PHPUnit
+vendor/bin/pint       # format PHP
+npx tsc --noEmit      # type-check TS
+```
+
+## 📄 Lisensi
+
+Proprietary — internal Tirta Nirwana. Framework Laravel di bawah [MIT](https://opensource.org/licenses/MIT).

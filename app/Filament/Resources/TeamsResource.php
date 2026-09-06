@@ -47,8 +47,7 @@ class TeamsResource extends Resource
                 ->options([
                     '1' => 'Show',
                     '0' => 'Hide',
-                   
-                ]),
+                ])->default(1),
 
 
 

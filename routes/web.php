@@ -1,37 +1,24 @@
 <?php
 
-use App\Livewire\FAQ;
-use App\Livewire\ShowAboutUs;
-use App\Livewire\ShowBlogDetail;
-use App\Livewire\ShowBlogs;
-use App\Livewire\ShowContactPage;
-use App\Livewire\ShowHome;
-use App\Livewire\ShowServiceDetail;
-use App\Livewire\ShowServicesPage;
-use App\Livewire\ShowTeam;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Public Web Routes (Inertia + React)
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+| Route names are preserved from the previous Livewire setup so existing
+| links keep working. The Filament admin panel lives at /admin (untouched).
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', ShowHome::class)->name('Home');
-Route::get('/services', ShowServicesPage::class)->name('Service');
-Route::get('/service/{id}', ShowServiceDetail::class)->name('ServiceDetail');
-Route::get('/ourteams', ShowTeam::class)->name('team');
-Route::get('/about-us', ShowAboutUs::class)->name('AboutUs');
-Route::get('/blogs', ShowBlogs::class)->name('Blog');
-// Route::get('/blogs/category={categoryslug}', ShowBlogs::class)->name('Blogs');
-Route::get('/blog-detail/{id}', ShowBlogDetail::class)->name('BlogDetail');
-Route::get('/faqs', FAQ::class)->name('FAQ');
-Route::get('/contactus', ShowContactPage::class)->name('Contact');
+Route::get('/', [PageController::class, 'home'])->name('Home');
+Route::get('/services', [PageController::class, 'services'])->name('Service');
+Route::get('/service/{id}', [PageController::class, 'serviceShow'])->whereNumber('id')->name('ServiceDetail');
+Route::get('/about-us', [PageController::class, 'about'])->name('AboutUs');
+Route::get('/ourteams', [PageController::class, 'team'])->name('team');
+Route::get('/blogs', [PageController::class, 'blogs'])->name('Blog');
+Route::get('/blog-detail/{id}', [PageController::class, 'blogShow'])->whereNumber('id')->name('BlogDetail');
+Route::get('/faqs', [PageController::class, 'faq'])->name('FAQ');
+Route::get('/contactus', [PageController::class, 'contact'])->name('Contact');
+Route::post('/contactus', [ContactController::class, 'submit'])->name('Contact.submit');

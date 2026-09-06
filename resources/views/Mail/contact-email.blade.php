@@ -12,6 +12,7 @@
     <h1>you have received an email</h1>
     <p>Name: {{ $mailData['name'] }}</p>
     <p>Email: {{ $mailData['email'] }}</p>
+    <p>Phone: {{ $mailData['phone'] }}</p>
     <p>Message: </p>
     <p>{{ $mailData['message'] }}</p>
     <p>Thank You</p>

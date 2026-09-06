@@ -6,9 +6,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <meta name="description" content="This is meta description">
-    <meta name="author" content="Themefisher">
+    <meta name="author" content="Pt Tirta Nirawana">
     <link rel="shortcut icon" href="{{ asset('/front/images/favicon.png') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('/front/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('/front/images/logo-icon.png') }}" type="image/x-icon">
 
     <!-- # Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
     <!-- # Main Style Sheet -->
     <link rel="stylesheet" href="{{ asset('/front/css/style.css') }}">
 
-    <title>{{ $title ?? 'Livewire and filament' }}</title>
+    <title>{{ $title ?? 'Pt Tirta Nirawana' }}</title>
     @livewireStyles
 </head>
 
@@ -34,8 +34,8 @@
         <nav class="navbar navbar-expand-xl navbar-light text-center py-3">
             <div class="container">
                 <a wire:navigate class="navbar-brand" href="{{route('Home')}}">
-                    <img loading="prelaod" decoding="async" class="img-fluid" width="160"
-                        src="{{ asset('/front/images/logo.png') }}" alt="Wallet">
+                    <img loading="prelaod" decoding="async" class="img-fluid" width="100"
+                        src="{{ asset('/front/images/logo-icon.png') }}" alt="Wallet">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -48,6 +48,7 @@
                         <li class="nav-item "> <a wire:navigate class="nav-link" href="{{route('Service')}}">Services</a></li>
                         <li class="nav-item "> <a wire:navigate class="nav-link" href="{{route('team')}}">Our Team</a></li>
                         <li class="nav-item "><a wire:navigate class="nav-link " href="{{route('Blog')}}">Blog</a></li>
+                        {{-- <li class="nav-item "><a wire:navigate class="nav-link " href="{{route('')}}">Portfolio</a></li> --}}
                         <li class="nav-item "><a wire:navigate class="nav-link " href="{{route('FAQ')}}">FAQ</a></li>
                     </ul>
                     <a wire:navigate href="{{route('Contact')}}" class="btn btn-outline-primary">Contact Us</a>
