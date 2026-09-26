@@ -1,147 +1,39 @@
-<div>
-  <!-- Pills navs -->
-<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-  <li class="nav-item" role="presentation">
-    <a class="nav-link active" id="tab-login" data-mdb-pill-init href="#pills-login" role="tab"
-      aria-controls="pills-login" aria-selected="true">Login</a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link" id="tab-register" data-mdb-pill-init href="#pills-register" role="tab"
-      aria-controls="pills-register" aria-selected="false">Register</a>
-  </li>
-</ul>
-<!-- Pills navs -->
+@extends('layouts.app')
+@section('title', 'Register - Pt Tirta Nirwana')
 
-<!-- Pills content -->
-<div class="tab-content">
-  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-    <form>
-      <div class="text-center mb-3">
-        <p>Sign in with:</p>
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
-
-      <p class="text-center">or:</p>
-
-      <!-- Email input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="email" id="loginName" class="form-control" />
-        <label class="form-label" for="loginName">Email or username</label>
-      </div>
-
-      <!-- Password input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" />
-        <label class="form-label" for="loginPassword">Password</label>
-      </div>
-
-      <!-- 2 column grid layout -->
-      <div class="row mb-4">
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Checkbox -->
-          <div class="form-check mb-3 mb-md-0">
-            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-            <label class="form-check-label" for="loginCheck"> Remember me </label>
-          </div>
+@section('content')
+    <section class="section">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Daftar Akun</h2>
+            <p>Buat akun untuk mendaftar ke program renang kami.</p>
         </div>
-
-        <div class="col-md-6 d-flex justify-content-center">
-          <!-- Simple link -->
-          <a href="#!">Forgot password?</a>
+        <div class="container">
+            <form wire:submit.prevent="register" class="needs-validation" novalidate data-aos="fade-up" data-aos-delay="100">
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Nama</label>
+                        <input type="text" wire:model="name" class="form-control" id="name" required>
+                        @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" wire:model="email" class="form-control" id="email" required>
+                        @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Kata Sandi</label>
+                        <input type="password" wire:model="password" class="form-control" id="password" required>
+                        @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
+                        <input type="password" wire:model="password_confirmation" class="form-control" id="password_confirmation" required>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn btn-primary">Daftar</button>
+                    </div>
+                </div>
+            </form>
         </div>
-      </div>
-
-      <!-- Submit button -->
-      <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
-
-      <!-- Register buttons -->
-      <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-      </div>
-    </form>
-  </div>
-  <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-    <form>
-      <div class="text-center mb-3">
-        <p>Sign up with:</p>
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-google"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-twitter"></i>
-        </button>
-
-        <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-          <i class="fab fa-github"></i>
-        </button>
-      </div>
-
-      <p class="text-center">or:</p>
-
-      <!-- Name input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="text" id="registerName" class="form-control" />
-        <label class="form-label" for="registerName">Name</label>
-      </div>
-
-      <!-- Username input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="text" id="registerUsername" class="form-control" />
-        <label class="form-label" for="registerUsername">Username</label>
-      </div>
-
-      <!-- Email input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="email" id="registerEmail" class="form-control" />
-        <label class="form-label" for="registerEmail">Email</label>
-      </div>
-
-      <!-- Password input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="password" id="registerPassword" class="form-control" />
-        <label class="form-label" for="registerPassword">Password</label>
-      </div>
-
-      <!-- Repeat Password input -->
-      <div data-mdb-input-init class="form-outline mb-4">
-        <input type="password" id="registerRepeatPassword" class="form-control" />
-        <label class="form-label" for="registerRepeatPassword">Repeat password</label>
-      </div>
-
-      <!-- Checkbox -->
-      <div class="form-check d-flex justify-content-center mb-4">
-        <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
-          aria-describedby="registerCheckHelpText" />
-        <label class="form-check-label" for="registerCheck">
-          I have read and agree to the terms
-        </label>
-      </div>
-
-      <!-- Submit button -->
-      <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-3">Sign in</button>
-    </form>
-  </div>
-</div>
-<!-- Pills content -->
-  
-    {{-- The best athlete wants his opponent at his best. --}}
-</div>
+    </section>
+@endsection

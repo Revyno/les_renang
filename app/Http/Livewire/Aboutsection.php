@@ -19,9 +19,7 @@ class Aboutsection extends Component
     }
     public function render()
     {
-        // $about = AboutUs::first();
-        // $videoUrl = $about->video_url ?? 'https://youtu.be/default-video';
-        // return view('livewire.aboutsection',compact('about', 'videoUrl'));
+       
           return view('livewire.aboutsection');
     }
 }

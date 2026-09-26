@@ -13,12 +13,12 @@
                         <div class="member-info">
                             <h4>{{ $instructor['name'] }}</h4>
                             <span>{{ $instructor['title'] }}</span>
-                            <div class="social">
-                                <a href="{{ $instructor['social']['twitter'] }}"><i class="bi bi-twitter-x"></i></a>
-                                <a href="{{ $instructor['social']['facebook'] }}"><i class="bi bi-facebook"></i></a>
-                                <a href="{{ $instructor['social']['instagram'] }}"><i class="bi bi-instagram"></i></a>
-                                <a href="{{ $instructor['social']['linkedin'] }}"><i class="bi bi-linkedin"></i></a>
-                            </div>
+                            {{-- <div class="social">
+                                <a href="{{ ['social']['twitter'] }}"><i class="bi bi-twitter-x"></i></a>
+                                <a href="{{ ['social']['facebook'] }}"><i class="bi bi-facebook"></i></a>
+                                <a href="{{ ['social']['instagram'] }}"><i class="bi bi-instagram"></i></a>
+                                <a href="{{ ['social']['linkedin'] }}"><i class="bi bi-linkedin"></i></a>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

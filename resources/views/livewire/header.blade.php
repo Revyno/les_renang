@@ -14,10 +14,10 @@
                         <li><a href="#syarat-dan-ketentuan">Syarat & Ketentuan</a></li>
                     </ul>
                 </li>
-                <li><a wire:navigate href="{{ route('about') }}" class="nav-link {{ Route::currentRouteName() == 'about' ? 'active' : '' }}">About</a></li>
-                <li><a wire:navigate href="{{ route('gallery') }}" class="nav-link {{ Route::currentRouteName() == 'gallery' ? 'active' : '' }}">Gallery</a></li>
-                <li><a wire:navigate href="{{ route('blog') }}" class="nav-link {{ Route::currentRouteName() == 'blog' ? 'active' : '' }}">Blog</a></li>
-                <li><a wire:navigate href="{{ route('contact') }}" class="nav-link {{ Route::currentRouteName() == 'contact' ? 'active' : '' }}">Contact</a></li>
+                <li><a wire:navigate href="{{ route('about') }}" class="nav-link">About</a></li>
+                <li><a wire:navigate href="{{ route('gallery') }}" class="nav-link ">Gallery</a></li>
+                <li><a wire:navigate href="{{ route('blog') }}" class="nav-link">Blog</a></li>
+                <li><a wire:navigate href="{{ route('contact') }}" class="nav-link">Contact</a></li>
                 @if($isAuthenticated)
                     <li><a wire:navigate href="{{ route('dashboard') }}">Dashboard</a></li>
                 @else

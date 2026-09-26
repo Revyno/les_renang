@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'cloudinary' => [
+        // Public — safe to expose to the frontend (used to build delivery URLs).
+        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+        // Server-side only (signed uploads / admin API). NEVER shared to the client.
+        'url' => env('CLOUDINARY_URL'),
+    ],
+
 ];

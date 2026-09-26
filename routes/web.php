@@ -1,18 +1,10 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Frontend\AuthController;
-use App\Http\Controllers\Frontend\StudentDashboardController;
-use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Livewire\ShowContactPage;
-use App\Http\Livewire\ShowHome;
-use App\Http\Livewire\ShowLogin;
-use App\Http\Livewire\ShowRegister;
-use App\Http\Livewire\Aboutsection;
-use App\Livewire\ShowBlogDetail;
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\ProgramLes;
 
 
 /*
@@ -25,32 +17,23 @@ use App\Http\Livewire\ProgramLes;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', ShowHome::class)->name('home');
-Route::get('/program-les', ProgramLes::class)->name('programles');
-// Route::get('/instructors', Instructors::class)->name('instructors');
-// Route::get('/about', About::class)->name('about');
-// Route::get('/gallery', Gallery::class)->name('gallery');
-// Route::get('/blog', Blog::class)->name('blog');
-// Route::get('/contact', Contact::class)->name('contact');
-Route::get('/login', ShowLogin::class)->name('login');
-Route::get('/register', ShowRegister::class)->name('register');
-// Route::middleware(['auth'])->get('/dashboard', Dashboard::class)->name('dashboard');
+Route::get('/', HomeController::class)->name('home');
 
-// Route::prefix('admin')->group(function () {
-//     \Filament\Facades\Filament::routes();
-// });
+// Public subpages (Inertia + React). Presentation only — see PageController.
+Route::get('/tentang', [PageController::class, 'about'])->name('about');
+Route::get('/layanan', [PageController::class, 'services'])->name('services');
+Route::get('/blog', [PageController::class, 'blog'])->name('blog');
+Route::get('/blog/{blog}', [PageController::class, 'blogShow'])->name('blog.show');
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+Route::get('/kontak', [PageController::class, 'contact'])->name('contact');
+Route::post('/kontak', [PageController::class, 'contactStore'])->name('contact.store');
+Route::get('/daftar', [PageController::class, 'daftar'])->name('daftar');
 
-// Route::get('/', ShowHome::class)->name('home');
-// Route::get('/program-les', ProgramLes::class)->name('programles');
-// // Route::get('/instructors', Instructors::class)->name('instructors');
-// Route::get('/about', Aboutsection::class)->name('about');
-// // Route::get('/blog', ShowBlogDetail::class)->name('blog');
-// Route::get('/contact', ShowContactPage::class)->name('contact');
-// Route::get('/login', ShowLogin::class)->name('login');
-// Route::get('/register', ShowRegister::class)->name('register');
-
-// // Admin Panel (Filament)
-// // Route::prefix('admin')->group(function () {
-// //     \Filament\Facades\Filament::routes();
-// // });
-
+// Auth (session-based, public site). Separate from Filament /admin guard.
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
