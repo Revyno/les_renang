@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "@inertiajs/react": "^3.7.1",
+        "@radix-ui/react-accordion": "^1.2.20",
+        "@radix-ui/react-dialog": "^1.1.23",
         "@radix-ui/react-slot": "^1.3.3",
         "alpinejs": "^3.14.9",
         "aos": "^2.3.4",
