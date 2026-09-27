@@ -7,12 +7,14 @@ import PageHeader from '@/components/site/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useI18n } from '@/lib/i18n'
 
 interface Props {
   meta: { title: string; description: string }
 }
 
 export default function LoginPage({ meta }: Props) {
+  const { t } = useI18n()
   const { data, setData, post, processing, errors } = useForm({
     email: '',
     password: '',
@@ -28,17 +30,17 @@ export default function LoginPage({ meta }: Props) {
     <>
       <Seo title={meta.title} description={meta.description} />
       <PageHeader
-        eyebrow="Akun"
-        title="Masuk"
-        description="Masuk ke akun Anda untuk melanjutkan pendaftaran."
-        crumbs={[{ label: 'Masuk' }]}
+        eyebrow={t('auth.eyebrow')}
+        title={t('auth.login.title')}
+        description={t('auth.login.subtitle')}
+        crumbs={[{ label: t('auth.login.title') }]}
       />
 
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-md rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8" data-aos="fade-up">
           <form onSubmit={submit} className="space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('auth.email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -51,7 +53,7 @@ export default function LoginPage({ meta }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="password">Kata Sandi</Label>
+              <Label htmlFor="password">{t('auth.password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -70,19 +72,19 @@ export default function LoginPage({ meta }: Props) {
                 onChange={(e) => setData('remember', e.target.checked)}
                 className="h-4 w-4 rounded border-border accent-brand-500"
               />
-              Ingat saya
+              {t('auth.login.remember')}
             </label>
 
             <Button type="submit" size="lg" disabled={processing} className="w-full">
               <LogIn />
-              {processing ? 'Memproses…' : 'Masuk'}
+              {processing ? t('auth.processing') : t('auth.login.title')}
             </Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Belum punya akun?{' '}
+            {t('auth.login.noAccount')}{' '}
             <Link href="/register" className="font-medium text-brand-600 hover:text-brand-700 hover:underline">
-              Daftar sekarang
+              {t('auth.login.registerCta')}
             </Link>
           </p>
         </div>

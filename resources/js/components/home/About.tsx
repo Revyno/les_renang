@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { cld, img } from '@/lib/media'
+import { useI18n } from '@/lib/i18n'
 import type { About as AboutData, GalleryItem } from '@/types/models'
 
 // Intro block + staggered 4-up gallery (reference "Kursus Renang Profesional" section).
@@ -13,10 +14,9 @@ const GALLERY_FALLBACK = [
 ]
 
 export default function About({ data, gallery }: { data: AboutData | null; gallery: GalleryItem[] }) {
-  const title = data?.title || 'Kursus Renang Profesional untuk Segala Usia'
-  const description =
-    data?.description ||
-    'Tirta Nirwana menghadirkan program renang terstruktur — dari kelas bayi dan anak hingga dewasa dan persiapan kompetisi. Kami menggabungkan keselamatan, metode modern, dan pendekatan personal agar setiap murid berkembang dengan nyaman.'
+  const { t } = useI18n()
+  const title = data?.title || t('home.about.title')
+  const description = data?.description || t('home.about.description')
   const items =
     gallery.length > 0
       ? gallery.slice(0, 4)
@@ -26,7 +26,7 @@ export default function About({ data, gallery }: { data: AboutData | null; galle
     <section className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 px-4 py-20 md:px-10 md:py-28">
       <div className="flex max-w-3xl flex-col items-center gap-6 text-center" data-aos="fade-up">
         <span className="inline-flex items-center rounded-full bg-brand-600 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-          Sekolah renang di Surabaya
+          {t('home.about.badge')}
         </span>
         <h2 className="text-3xl font-medium leading-[1.12] tracking-tight text-foreground md:text-4xl lg:text-5xl">
           {title}
@@ -36,7 +36,7 @@ export default function About({ data, gallery }: { data: AboutData | null; galle
           href="/tentang"
           className="inline-flex h-12 items-center gap-2 rounded-full bg-brand-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
         >
-          Tentang kami
+          {t('home.about.cta')}
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>

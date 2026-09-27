@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AboutUsResource\Pages;
 use App\Filament\Resources\AboutUsResource\RelationManagers;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\AboutUs;
+use App\Support\Media;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -35,11 +37,10 @@ class AboutUsResource extends Resource
                     ->required()
                     ->maxLength(100),
 
-                Forms\Components\FileUpload::make('img')
+                CloudinaryUpload::make('img')
                     ->label('Thumbnail')
                     ->image()
-                    ->disk('public')
-                    ->directory('aboutus/thumbnails')
+                    ->directory('les-renang/cms/about')
                     ->required(),
             ]);
     }
@@ -59,7 +60,7 @@ class AboutUsResource extends Resource
                 ->limit(50),
             Tables\Columns\ImageColumn::make('img')
                 ->label('Thumbnail')
-                ->disk('public'),
+                ->getStateUsing(fn ($record) => Media::url($record->img)),
                 // Forms\Components\TextInput::make('title')
                 //     ->label('Title'),
                 //     // ->sortable(),

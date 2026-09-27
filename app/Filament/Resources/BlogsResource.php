@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BlogsResource\Pages;
 use App\Filament\Resources\BlogsResource\RelationManagers;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Blogs;
 use Filament\Forms;
 use App\Models\Categories;
@@ -41,11 +42,10 @@ class BlogsResource extends Resource
                     ->label('Short Description')
                     ->required()
                     ->maxLength(255),
-            Forms\Components\FileUpload::make('imgUrl')
+            CloudinaryUpload::make('imgUrl')
                     ->label('Thumbnail')
                     ->image()
-                    ->disk('public')
-                    ->directory('blogs/thumbnails')
+                    ->directory('les-renang/cms/blogs')
                     ->required(),
                 
             ]);

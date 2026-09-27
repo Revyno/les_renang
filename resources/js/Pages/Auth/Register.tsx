@@ -7,12 +7,14 @@ import PageHeader from '@/components/site/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useI18n } from '@/lib/i18n'
 
 interface Props {
   meta: { title: string; description: string }
 }
 
 export default function RegisterPage({ meta }: Props) {
+  const { t } = useI18n()
   const { data, setData, post, processing, errors } = useForm({
     name: '',
     email: '',
@@ -29,17 +31,17 @@ export default function RegisterPage({ meta }: Props) {
     <>
       <Seo title={meta.title} description={meta.description} />
       <PageHeader
-        eyebrow="Akun"
-        title="Daftar Akun"
-        description="Buat akun untuk mulai mendaftar program renang bersama kami."
-        crumbs={[{ label: 'Daftar Akun' }]}
+        eyebrow={t('auth.eyebrow')}
+        title={t('auth.register.title')}
+        description={t('auth.register.subtitle')}
+        crumbs={[{ label: t('auth.register.title') }]}
       />
 
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28">
         <div className="mx-auto max-w-md rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8" data-aos="fade-up">
           <form onSubmit={submit} className="space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="name">Nama Lengkap</Label>
+              <Label htmlFor="name">{t('auth.register.name')}</Label>
               <Input
                 id="name"
                 autoComplete="name"
@@ -51,7 +53,7 @@ export default function RegisterPage({ meta }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('auth.email')}</Label>
               <Input
                 id="email"
                 type="email"
@@ -64,7 +66,7 @@ export default function RegisterPage({ meta }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="password">Kata Sandi</Label>
+              <Label htmlFor="password">{t('auth.password')}</Label>
               <Input
                 id="password"
                 type="password"
@@ -77,7 +79,7 @@ export default function RegisterPage({ meta }: Props) {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="password_confirmation">Konfirmasi Kata Sandi</Label>
+              <Label htmlFor="password_confirmation">{t('auth.register.passwordConfirmation')}</Label>
               <Input
                 id="password_confirmation"
                 type="password"
@@ -90,14 +92,14 @@ export default function RegisterPage({ meta }: Props) {
 
             <Button type="submit" size="lg" disabled={processing} className="w-full">
               <UserPlus />
-              {processing ? 'Memproses…' : 'Daftar'}
+              {processing ? t('auth.processing') : t('auth.register.submit')}
             </Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            Sudah punya akun?{' '}
+            {t('auth.register.haveAccount')}{' '}
             <Link href="/login" className="font-medium text-brand-600 hover:text-brand-700 hover:underline">
-              Masuk di sini
+              {t('auth.register.loginCta')}
             </Link>
           </p>
         </div>

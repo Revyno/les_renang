@@ -3,20 +3,22 @@ import { Link, usePage } from '@inertiajs/react'
 import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BRAND } from '@/lib/brand'
+import { useI18n, LanguageToggle } from '@/lib/i18n'
 import type { SharedProps } from '@/types/models'
 
 const NAV = [
-  { label: 'Beranda', href: '/' },
-  { label: 'Layanan', href: '/layanan' },
-  { label: 'Tentang', href: '/tentang' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'FAQ', href: '/faq' },
+  { key: 'nav.home', href: '/' },
+  { key: 'nav.services', href: '/layanan' },
+  { key: 'nav.about', href: '/tentang' },
+  { key: 'nav.blog', href: '/blog' },
+  { key: 'nav.faq', href: '/faq' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { url, props } = usePage<SharedProps>()
+  const { t } = useI18n()
   const user = props.auth?.user
 
   useEffect(() => {
@@ -27,8 +29,6 @@ export default function Navbar() {
   }, [])
 
   const isActive = (href: string) => (href === '/' ? url === '/' : url.startsWith(href))
-  // Transparent white-on-image treatment only over the home hero (a dark image
-  // sits behind it there); solid everywhere else so text stays legible.
   const onHero = url === '/' && !scrolled && !open
 
   return (
@@ -74,7 +74,7 @@ export default function Navbar() {
                       : 'text-foreground/80 hover:bg-secondary hover:text-foreground',
                 )}
               >
-                {item.label}
+                {t(item.key)}
               </Link>
             )
           })}
@@ -82,6 +82,7 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="hidden items-center gap-2.5 md:flex">
+          <LanguageToggle onDark={onHero} />
           {user ? (
             <Link
               href="/logout"
@@ -89,21 +90,21 @@ export default function Navbar() {
               as="button"
               className={cn('text-sm font-medium', onHero ? 'text-white/90 hover:text-white' : 'text-foreground/80 hover:text-brand-500')}
             >
-              Keluar
+              {t('nav.logout')}
             </Link>
           ) : (
             <Link
               href="/login"
               className={cn('text-sm font-medium', onHero ? 'text-white/90 hover:text-white' : 'text-foreground/80 hover:text-brand-500')}
             >
-              Masuk
+              {t('nav.login')}
             </Link>
           )}
           <Link
             href="/daftar"
             className="flex h-11 items-center rounded-full bg-brand-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
           >
-            Daftar Sekarang
+            {t('nav.register')}
           </Link>
         </div>
 
@@ -111,7 +112,7 @@ export default function Navbar() {
           type="button"
           className={cn('grid h-10 w-10 place-items-center rounded-lg md:hidden', onHero ? 'text-white' : 'text-foreground')}
           onClick={() => setOpen((v) => !v)}
-          aria-label="Buka menu"
+          aria-label={t('nav.menu')}
           aria-expanded={open}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -131,17 +132,20 @@ export default function Navbar() {
                   isActive(item.href) ? 'bg-brand-500 text-white' : 'text-foreground/80 hover:bg-secondary',
                 )}
               >
-                {item.label}
+                {t(item.key)}
               </Link>
             ))}
             <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3">
+              <div className="px-4 py-1">
+                <LanguageToggle />
+              </div>
               {user ? (
                 <Link href="/logout" method="post" as="button" onClick={() => setOpen(false)} className="px-4 py-2 text-left text-sm font-medium text-foreground/80">
-                  Keluar
+                  {t('nav.logout')}
                 </Link>
               ) : (
                 <Link href="/login" onClick={() => setOpen(false)} className="px-4 py-2 text-sm font-medium text-foreground/80">
-                  Masuk
+                  {t('nav.login')}
                 </Link>
               )}
               <Link
@@ -149,7 +153,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="flex h-11 items-center justify-center rounded-full bg-brand-500 px-6 text-sm font-semibold text-white"
               >
-                Daftar Sekarang
+                {t('nav.register')}
               </Link>
             </div>
           </nav>

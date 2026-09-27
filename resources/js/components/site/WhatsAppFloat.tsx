@@ -1,6 +1,8 @@
 import { useSite, waLink } from '@/lib/site'
+import { useI18n } from '@/lib/i18n'
 
 export default function WhatsAppFloat() {
+  const { t } = useI18n()
   const site = useSite()
   if (!site.whatsapp) return null
 
@@ -9,7 +11,7 @@ export default function WhatsAppFloat() {
       href={waLink(site.whatsapp, site.whatsapp_message)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat WhatsApp"
+      aria-label={t('site.whatsapp.aria')}
       className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110"
     >
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7" aria-hidden="true">

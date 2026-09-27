@@ -2,48 +2,39 @@ import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { cld } from '@/lib/media'
+import { useI18n } from '@/lib/i18n'
 import CountUp from '@/components/CountUp'
 import type { Stat } from '@/types/models'
 
-// Evergreen value props (not admin-managed) + DB-driven stat cards.
-const WHY = [
-  {
-    title: 'Aman dan selalu terawasi',
-    desc: 'Rasio pelatih–murid ideal dan protokol keselamatan air yang ketat di setiap sesi, sehingga orang tua bisa tenang.',
-  },
-  {
-    title: 'Pendekatan personal',
-    desc: 'Program disesuaikan dengan usia, level, dan tujuan setiap murid — dari takut air hingga siap lomba.',
-  },
-  {
-    title: 'Metode pengajaran modern',
-    desc: 'Teknik pengajaran terkini yang membuat belajar renang cepat, bertahap, dan menyenangkan.',
-  },
-  {
-    title: 'Jadwal kelas fleksibel',
-    desc: 'Pilihan jadwal pagi, sore, dan akhir pekan yang bisa disesuaikan dengan aktivitasmu.',
-  },
-]
-
-const STAT_FALLBACK: Stat[] = [
-  { icon: null, value: '10+', label: 'Tahun pengalaman' },
-  { icon: null, value: '2.500+', label: 'Murid terlatih' },
-  { icon: null, value: '15+', label: 'Pelatih bersertifikat' },
-  { icon: null, value: '4.9/5', label: 'Rating kepuasan' },
-]
-
 export default function WhyUs({ stats }: { stats: Stat[] }) {
+  const { t } = useI18n()
   const [open, setOpen] = useState(0)
+
+  // Evergreen value props (not admin-managed) + DB-driven stat cards.
+  const WHY = [
+    { title: t('home.whyUs.items.safe.title'), desc: t('home.whyUs.items.safe.desc') },
+    { title: t('home.whyUs.items.personal.title'), desc: t('home.whyUs.items.personal.desc') },
+    { title: t('home.whyUs.items.modern.title'), desc: t('home.whyUs.items.modern.desc') },
+    { title: t('home.whyUs.items.flexible.title'), desc: t('home.whyUs.items.flexible.desc') },
+  ]
+
+  const STAT_FALLBACK: Stat[] = [
+    { icon: null, value: '10+', label: t('home.stats.experience') },
+    { icon: null, value: '2.500+', label: t('home.stats.students') },
+    { icon: null, value: '15+', label: t('home.stats.coaches') },
+    { icon: null, value: '4.9/5', label: t('home.stats.rating') },
+  ]
+
   const items = stats.length > 0 ? stats.slice(0, 4) : STAT_FALLBACK
 
   return (
     <section data-aos="fade-up" className="mx-auto flex max-w-screen-2xl flex-col gap-14 px-4 py-20 md:px-10 md:py-28">
       <div data-aos="fade-up" className="flex flex-col gap-5">
         <span className="inline-flex w-fit items-center rounded-full bg-brand-600 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-          Kenapa memilih kami
+          {t('home.whyUs.badge')}
         </span>
         <h2 className="max-w-3xl text-3xl font-medium leading-[1.08] tracking-tight text-foreground md:text-4xl lg:text-5xl">
-          Dibangun dari pengalaman. Digerakkan oleh kepedulian.
+          {t('home.whyUs.title')}
         </h2>
       </div>
 
@@ -76,7 +67,7 @@ export default function WhyUs({ stats }: { stats: Stat[] }) {
         <div data-aos="fade-left" className="relative h-72 overflow-hidden rounded-3xl lg:col-span-5 lg:h-auto">
           <img
             src={cld('teacher/IMG_3599.JPG')}
-            alt="Murid fokus berlatih gaya bebas"
+            alt={t('home.whyUs.imageAlt')}
             className="absolute inset-0 h-full w-full object-cover"
             loading="lazy"
           />

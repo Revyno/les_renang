@@ -1,9 +1,11 @@
 import { Link } from '@inertiajs/react'
 import { ArrowRight } from 'lucide-react'
 import { img } from '@/lib/media'
+import { useI18n } from '@/lib/i18n'
 import type { BlogPost } from '@/types/models'
 
 export default function Blog({ data }: { data: BlogPost[] }) {
+  const { t } = useI18n()
   if (!data || data.length === 0) return null
   const posts = data.slice(0, 3)
 
@@ -12,17 +14,17 @@ export default function Blog({ data }: { data: BlogPost[] }) {
       <div data-aos="fade-up" className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
         <div className="flex flex-col gap-4">
           <span className="inline-flex w-fit items-center rounded-full bg-brand-600 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
-            Artikel kami
+            {t('home.blog.badge')}
           </span>
           <h2 className="text-3xl font-medium leading-[1.1] tracking-tight text-foreground md:text-4xl">
-            Berita &amp; Blog Terbaru
+            {t('home.blog.title')}
           </h2>
         </div>
         <Link
           href="/blog"
           className="inline-flex h-11 items-center rounded-full bg-brand-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
         >
-          Lihat semua
+          {t('common.viewAll')}
         </Link>
       </div>
 
@@ -40,7 +42,7 @@ export default function Blog({ data }: { data: BlogPost[] }) {
             {p.date && <span className="text-sm text-stone-500">{p.date}</span>}
             <span className="text-xl font-semibold leading-snug tracking-tight text-foreground">{p.title}</span>
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-500">
-              Baca selengkapnya
+              {t('home.blog.readMore')}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </span>
           </Link>

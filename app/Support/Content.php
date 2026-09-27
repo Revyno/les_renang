@@ -36,6 +36,7 @@ class Content
             'title' => $hero->title,
             'subtitle' => $hero->subtitle,
             'image' => Media::url($hero->image),
+            'video' => Media::videoUrl($hero->video_background),
             'cta_text' => $hero->cta_text,
             'cta_link' => $hero->cta_link,
             'secondary_cta_text' => $hero->secondary_cta_text,
@@ -86,7 +87,7 @@ class Content
                 'age_range' => $p->age_range,
                 'schedule' => trim(collect([$p->day, $p->start_time, $p->end_time ? '– ' . $p->end_time : null])->filter()->implode(' ')) ?: null,
                 'price' => method_exists($p, 'getFormattedPriceAttribute') ? $p->formatted_price : ($p->price ? 'Rp ' . number_format((float) $p->price, 0, ',', '.') : null),
-                'thumbnail' => Media::url($p->thumbnail),
+                'thumbnail' => Media::url(is_array($p->thumbnail) ? ($p->thumbnail[0] ?? null) : $p->thumbnail),
                 'description' => $p->description,
                 'instructor' => optional($p->instructor)->name,
             ])->all();

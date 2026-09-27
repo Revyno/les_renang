@@ -3,6 +3,7 @@ import 'aos/dist/aos.css';
 import { createInertiaApp, router } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
 import AOS from 'aos';
+import { I18nProvider } from '@/lib/i18n';
 
 const appName = 'Tirta Nirwana';
 
@@ -25,7 +26,11 @@ createInertiaApp({
     });
     // Inertia swaps the DOM without a reload; re-scan so new page elements animate.
     router.on('success', () => setTimeout(() => AOS.refreshHard(), 0));
-    createRoot(el).render(<App {...props} />);
+    createRoot(el).render(
+      <I18nProvider>
+        <App {...props} />
+      </I18nProvider>,
+    );
   },
   progress: { color: '#C84B16' },
 });

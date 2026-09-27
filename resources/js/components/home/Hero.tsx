@@ -5,13 +5,8 @@ import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { cld, img } from '@/lib/media'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/lib/i18n'
 import type { Hero as HeroData } from '@/types/models'
-
-const FALLBACK = {
-  title: 'Belajar berenang dengan percaya diri',
-  subtitle:
-    'Kursus renang untuk segala usia — dari pengenalan air pertama hingga teknik kompetisi, dibimbing pelatih bersertifikat dengan rasio murid yang ideal.',
-}
 
 // Real swim photos cycled as the hero backdrop. A CMS hero image, if set, leads.
 const HERO_PHOTOS = [
@@ -25,9 +20,10 @@ const HERO_PHOTOS = [
 // Full-bleed rounded hero card with an auto-playing image carousel. The fixed Navbar
 // floats transparent over the top; content is bottom-anchored so it never collides.
 export default function Hero({ data }: { data: HeroData | null }) {
-  const title = data?.title || FALLBACK.title
-  const subtitle = data?.subtitle || FALLBACK.subtitle
-  const ctaText = data?.cta_text || 'Lihat program kami'
+  const { t } = useI18n()
+  const title = data?.title || t('home.hero.title')
+  const subtitle = data?.subtitle || t('home.hero.subtitle')
+  const ctaText = data?.cta_text || t('home.hero.cta')
   const ctaLink = data?.cta_link || '/layanan'
   const slides = data?.image ? [img(data.image, HERO_PHOTOS[0]), ...HERO_PHOTOS.map(cld)] : HERO_PHOTOS.map(cld)
 
@@ -56,7 +52,7 @@ export default function Hero({ data }: { data: HeroData | null }) {
               <div key={i} className="relative h-full min-w-0 flex-[0_0_100%]">
                 <img
                   src={src}
-                  alt="Murid berlatih renang bersama Tirta Nirwana"
+                  alt={t('home.hero.imageAlt')}
                   className="h-full w-full object-cover object-[center_40%]"
                   loading={i === 0 ? 'eager' : 'lazy'}
                 />

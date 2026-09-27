@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GalleryResource\Pages;
 use App\Filament\Resources\GalleryResource\RelationManagers;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Gallery;
+use App\Support\Media;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -26,7 +28,7 @@ class GalleryResource extends Resource
             ->schema([
                 //
                 Forms\Components\TextInput::make('title')->required(),
-                Forms\Components\FileUpload::make('image')->image()->directory('gallery'),
+                CloudinaryUpload::make('image')->image()->directory('les-renang/cms/gallery'),
             ]);
     }
 
@@ -36,7 +38,7 @@ class GalleryResource extends Resource
             ->columns([
                 //
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')->getStateUsing(fn ($record) => Media::url($record->image)),
             ])
             ->filters([
                 //

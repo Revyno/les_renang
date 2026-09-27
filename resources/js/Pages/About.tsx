@@ -8,6 +8,7 @@ import SectionHeading from '@/components/home/SectionHeading'
 import { Button } from '@/components/ui/button'
 import { img, cld } from '@/lib/media'
 import { BRAND } from '@/lib/brand'
+import { useI18n } from '@/lib/i18n'
 import type { About as AboutData, Stat, Instructor } from '@/types/models'
 
 interface Props {
@@ -17,66 +18,68 @@ interface Props {
   instructors: Instructor[]
 }
 
-const VALUES = [
-  {
-    icon: ShieldCheck,
-    title: 'Aman & terawasi',
-    desc: 'Protokol air yang ketat dan pengawasan penuh pada setiap sesi latihan.',
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Pendekatan personal',
-    desc: 'Kelas kecil dan sabar, terutama untuk murid yang masih takut air.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Metode modern',
-    desc: 'Kurikulum berjenjang dengan progres yang jelas dan mudah dipantau.',
-  },
-  {
-    icon: CalendarClock,
-    title: 'Jadwal fleksibel',
-    desc: 'Pilih waktu latihan yang paling pas dengan rutinitas Anda.',
-  },
-]
-
-const FALLBACK_COACHES = [
-  { name: 'Kepala Pelatih', specialization: 'Renang Prestasi', certification: 'Bersertifikat Nasional', bio: 'Memimpin program prestasi dengan pengalaman melatih perenang dari usia dini hingga tingkat kompetisi.', photo: cld('team/team-1.jpg') },
-  { name: 'Pelatih Anak', specialization: 'Kelas Anak & Pemula', certification: 'Water Safety', bio: 'Sabar dan telaten mendampingi anak mengenal air dengan pendekatan yang aman dan menyenangkan.', photo: cld('team/team-2.jpg') },
-  { name: 'Pelatih Dewasa', specialization: 'Teknik & Ketahanan', certification: 'Lisensi Pelatih', bio: 'Fokus pada perbaikan teknik gaya dan ketahanan untuk perenang dewasa di segala level.', photo: cld('team/team-3.jpg') },
-]
-
 export default function AboutPage({ meta, about, instructors }: Props) {
+  const { t } = useI18n()
+
+  const VALUES = [
+    {
+      icon: ShieldCheck,
+      title: t('about.valSafeTitle'),
+      desc: t('about.valSafeDesc'),
+    },
+    {
+      icon: HeartHandshake,
+      title: t('about.valPersonalTitle'),
+      desc: t('about.valPersonalDesc'),
+    },
+    {
+      icon: Sparkles,
+      title: t('about.valModernTitle'),
+      desc: t('about.valModernDesc'),
+    },
+    {
+      icon: CalendarClock,
+      title: t('about.valFlexTitle'),
+      desc: t('about.valFlexDesc'),
+    },
+  ]
+
+  const FALLBACK_COACHES = [
+    { name: t('about.coach1Name'), specialization: t('about.coach1Spec'), certification: t('about.coach1Cert'), bio: t('about.coach1Bio'), photo: cld('team/team-1.jpg') },
+    { name: t('about.coach2Name'), specialization: t('about.coach2Spec'), certification: t('about.coach2Cert'), bio: t('about.coach2Bio'), photo: cld('team/team-2.jpg') },
+    { name: t('about.coach3Name'), specialization: t('about.coach3Spec'), certification: t('about.coach3Cert'), bio: t('about.coach3Bio'), photo: cld('team/team-3.jpg') },
+  ]
+
   const description =
     about?.description ||
-    `${BRAND.name} adalah sekolah renang di Surabaya yang fokus pada keselamatan, kenyamanan, dan kemajuan setiap murid. Kami mendampingi anak hingga dewasa belajar berenang secara bertahap, aman, dan menyenangkan.`
+    `${BRAND.name} ${t('about.descFallback')}`
   const coaches = instructors.length ? instructors : FALLBACK_COACHES
 
   return (
     <>
       <Seo title={meta.title} description={meta.description} />
       <PageHeader
-        eyebrow="Tentang"
-        title={about?.title || `Tentang ${BRAND.name}`}
-        description="Sekolah renang di Surabaya yang fokus pada keselamatan, kenyamanan, dan kemajuan setiap murid."
-        crumbs={[{ label: 'Tentang' }]}
+        eyebrow={t('nav.about')}
+        title={about?.title || `${t('nav.about')} ${BRAND.name}`}
+        description={t('about.headerDesc')}
+        crumbs={[{ label: t('nav.about') }]}
       />
 
       {/* Section 1 — intro */}
       <section className="mx-auto grid max-w-screen-2xl items-center gap-12 px-4 py-20 md:grid-cols-2 md:px-10 md:py-28">
         <div className="flex flex-col gap-5" data-aos="fade-right">
           <span className="inline-flex w-fit items-center rounded-full bg-brand-50 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-700">
-            Cerita kami
+            {t('about.storyEyebrow')}
           </span>
           <h2 className="text-3xl font-medium leading-tight tracking-tight text-foreground md:text-4xl">
-            Dibangun dari pengalaman. Digerakkan oleh kepedulian.
+            {t('about.storyTitle')}
           </h2>
           <p className="whitespace-pre-line text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>
         </div>
         <div className="overflow-hidden rounded-4xl bg-stone-100" data-aos="fade-left">
           <img
             src={img(about?.img, 'about.jpg')}
-            alt={about?.title || `Suasana latihan di ${BRAND.name}`}
+            alt={about?.title || `${t('about.trainingAtAlt')} ${BRAND.name}`}
             className="aspect-[4/5] w-full object-cover"
           />
         </div>
@@ -86,8 +89,8 @@ export default function AboutPage({ meta, about, instructors }: Props) {
       <section className="mx-auto max-w-screen-2xl px-4 pb-20 md:px-10 md:pb-28" data-aos="fade-up">
         <SectionHeading
           align="left"
-          eyebrow="Kenapa memilih kami"
-          title="Alasan keluarga mempercayakan latihan renang kepada kami"
+          eyebrow={t('about.valuesEyebrow')}
+          title={t('about.valuesTitle')}
         />
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {VALUES.map((v, i) => (
@@ -109,9 +112,9 @@ export default function AboutPage({ meta, about, instructors }: Props) {
         <div className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28">
           <SectionHeading
             tone="dark"
-            eyebrow="Tim Pelatih"
-            title="Dibimbing oleh yang ahli"
-            description="Pelatih berpengalaman dan bersertifikat yang siap mendampingi perjalanan renang Anda."
+            eyebrow={t('about.teamEyebrow')}
+            title={t('about.teamHeadingTitle')}
+            description={t('about.teamHeadingDesc')}
           />
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {coaches.map((c, i) => (
@@ -123,7 +126,7 @@ export default function AboutPage({ meta, about, instructors }: Props) {
               >
                 <img
                   src={img(c.photo, `team/team-${(i % 3) + 1}.jpg`)}
-                  alt={`Foto ${c.name}`}
+                  alt={`${t('about.photoAlt')} ${c.name}`}
                   className="aspect-[4/5] w-full object-cover"
                 />
                 <div className="flex flex-col gap-3 p-6">
@@ -148,19 +151,19 @@ export default function AboutPage({ meta, about, instructors }: Props) {
       {/* CTA */}
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-24" data-aos="fade-up">
         <div className="rounded-4xl bg-primary p-10 text-center text-primary-foreground md:p-16">
-          <h2 className="text-2xl font-medium tracking-tight md:text-4xl">Siap mulai perjalanan renang Anda?</h2>
+          <h2 className="text-2xl font-medium tracking-tight md:text-4xl">{t('about.ctaTitle')}</h2>
           <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">
-            Temukan program yang paling sesuai dan mulai latihan bersama {BRAND.name} hari ini.
+            {t('about.ctaSubtitlePre')} {BRAND.name} {t('about.ctaSubtitlePost')}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg" variant="accent">
               <Link href="/layanan">
-                Lihat Program
+                {t('about.ctaPrograms')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:text-white">
-              <Link href="/kontak">Konsultasi Gratis</Link>
+              <Link href="/kontak">{t('about.ctaConsult')}</Link>
             </Button>
           </div>
         </div>

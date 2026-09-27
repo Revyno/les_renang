@@ -7,6 +7,7 @@ import SectionHeading from '@/components/home/SectionHeading'
 import { Button } from '@/components/ui/button'
 import { img, cld } from '@/lib/media'
 import { useSite, waLink } from '@/lib/site'
+import { useI18n } from '@/lib/i18n'
 import type { Program } from '@/types/models'
 
 interface Props {
@@ -68,41 +69,42 @@ const FALLBACK_PROGRAMS: Program[] = [
   },
 ]
 
-const STEPS = [
-  { n: 1, title: 'Pilih program', desc: 'Tentukan kelas yang sesuai usia dan tujuan Anda.' },
-  { n: 2, title: 'Hubungi kami', desc: 'Klik "Pilih program" untuk konfirmasi jadwal via WhatsApp.' },
-  { n: 3, title: 'Mulai berlatih', desc: 'Datang sesuai jadwal dan mulai belajar berenang.' },
-]
-
 export default function RegisterProgramPage({ meta, programs }: Props) {
   const site = useSite()
+  const { t } = useI18n()
   const list = programs.length > 0 ? programs : FALLBACK_PROGRAMS
+
+  const STEPS = [
+    { n: 1, title: t('register.programs.choose'), desc: t('register.steps.s1Desc') },
+    { n: 2, title: t('common.contactUs'), desc: t('register.steps.s2Desc') },
+    { n: 3, title: t('register.steps.s3Title'), desc: t('register.steps.s3Desc') },
+  ]
 
   // ponytail: enrollment/payment is admin business logic (out of frontend scope) —
   // registration is routed to WhatsApp confirmation. Upgrade: wire to a Registration
   // model + auth when the enrollment flow is in scope.
   const daftar = (name: string) =>
     site.whatsapp
-      ? waLink(site.whatsapp, `Halo, saya ingin mendaftar program "${name}". Mohon info jadwal & biaya.`)
+      ? waLink(site.whatsapp, t('register.wa.message').replace('{name}', name))
       : '/kontak'
 
   return (
     <>
       <Seo title={meta.title} description={meta.description} />
       <PageHeader
-        eyebrow="Pendaftaran"
-        title="Daftar Program"
-        description="Pilih program renang yang paling sesuai untuk usia dan level Anda, lalu daftar dengan mudah bersama kami."
-        crumbs={[{ label: 'Daftar' }]}
+        eyebrow={t('register.header.eyebrow')}
+        title={t('register.header.title')}
+        description={t('register.header.description')}
+        crumbs={[{ label: t('register.header.crumb') }]}
       />
 
       {/* Programs grid */}
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28">
         <SectionHeading
           align="left"
-          eyebrow="Program kami"
-          title="Program untuk setiap usia dan level"
-          description="Semua program dikelola dari CMS — jadwal dan biaya dapat berubah sewaktu-waktu."
+          eyebrow={t('register.programs.eyebrow')}
+          title={t('register.programs.title')}
+          description={t('register.programs.description')}
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -160,7 +162,7 @@ export default function RegisterProgramPage({ meta, programs }: Props) {
                   <Button asChild className="w-full">
                     <a href={daftar(p.name)} target="_blank" rel="noopener noreferrer">
                       <MessageCircle />
-                      Pilih program
+                      {t('register.programs.choose')}
                     </a>
                   </Button>
                 </div>
@@ -176,9 +178,9 @@ export default function RegisterProgramPage({ meta, programs }: Props) {
           <div data-aos="fade-right">
             <SectionHeading
               align="left"
-              eyebrow="Cara mendaftar"
-              title="Tiga langkah mudah"
-              description="Tidak ada formulir rumit — cukup pilih program dan tim kami membantu sisanya."
+              eyebrow={t('register.how.eyebrow')}
+              title={t('register.how.title')}
+              description={t('register.how.description')}
             />
             <ol className="mt-10 space-y-6">
               {STEPS.map((s) => (
@@ -203,13 +205,13 @@ export default function RegisterProgramPage({ meta, programs }: Props) {
             />
             <div className="flex flex-col gap-4">
               <span className="inline-flex w-fit items-center rounded-full bg-brand-900 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-peach">
-                Butuh saran?
+                {t('register.cta.badge')}
               </span>
               <h3 className="text-2xl font-medium leading-tight tracking-tight text-white md:text-3xl">
-                Belum yakin program mana yang cocok?
+                {t('register.cta.title')}
               </h3>
               <p className="text-stone-400">
-                Konsultasikan usia dan level — kami bantu pilihkan program yang paling pas untuk Anda.
+                {t('register.cta.description')}
               </p>
               <Button asChild size="lg" className="mt-2 w-fit">
                 <a
@@ -217,7 +219,7 @@ export default function RegisterProgramPage({ meta, programs }: Props) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Konsultasi gratis
+                  {t('register.cta.button')}
                   <ArrowRight />
                 </a>
               </Button>

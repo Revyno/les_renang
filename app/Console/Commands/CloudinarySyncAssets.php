@@ -38,7 +38,9 @@ class CloudinarySyncAssets extends Command
             return self::FAILURE;
         }
 
-        $finder = (new Finder())->files()->in($root)->name(array_map(fn ($e) => "*.{$e}", self::EXT));
+        // Case-insensitive so uppercase extensions (IMG_3599.JPG) sync too —
+        // a glob like *.jpg would skip them and the CDN URL 404s.
+        $finder = (new Finder())->files()->in($root)->name('/\.(' . implode('|', self::EXT) . ')$/i');
         $total = $finder->count();
         if ($total === 0) {
             $this->warn('No images found.');

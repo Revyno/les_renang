@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { Plus, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/lib/i18n'
 import type { Faq as FaqData } from '@/types/models'
 
-const FALLBACK: FaqData[] = [
-  { id: 1, question: 'Mulai usia berapa anak bisa ikut kelas?', answer: 'Kelas pengenalan air dapat dimulai sejak balita. Pelatih menilai kesiapan anak di sesi pertama sebelum menentukan level.' },
-  { id: 2, question: 'Apakah perlu membawa perlengkapan sendiri?', answer: 'Cukup bawa baju renang, kacamata, dan handuk. Papan pelampung dan alat bantu latihan kami sediakan.' },
-  { id: 3, question: 'Bagaimana jika sesi latihan terlewat?', answer: 'Sesi dapat dijadwalkan ulang dengan pemberitahuan sebelumnya sesuai kebijakan reschedule kami.' },
-  { id: 4, question: 'Di mana lokasi kolam latihan?', answer: 'Latihan berlangsung di kolam mitra kami di area Surabaya. Hubungi kami untuk detail lokasi terdekat.' },
-]
-
 export default function Faq({ data }: { data: FaqData[] }) {
+  const { t } = useI18n()
+  const FALLBACK: FaqData[] = [
+    { id: 1, question: t('home.faq.items.age.q'), answer: t('home.faq.items.age.a') },
+    { id: 2, question: t('home.faq.items.gear.q'), answer: t('home.faq.items.gear.a') },
+    { id: 3, question: t('home.faq.items.missed.q'), answer: t('home.faq.items.missed.a') },
+    { id: 4, question: t('home.faq.items.location.q'), answer: t('home.faq.items.location.a') },
+  ]
   const faqs = data.length > 0 ? data : FALLBACK
   const [open, setOpen] = useState(0)
 
@@ -21,7 +22,7 @@ export default function Faq({ data }: { data: FaqData[] }) {
           FAQ
         </span>
         <h2 className="text-3xl font-medium leading-[1.1] tracking-tight text-foreground md:text-4xl lg:text-5xl">
-          Pertanyaan yang sering diajukan
+          {t('home.faq.title')}
         </h2>
       </div>
 

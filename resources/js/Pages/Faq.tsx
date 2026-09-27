@@ -4,6 +4,7 @@ import Seo from '@/components/Seo'
 import SiteLayout from '@/Layouts/SiteLayout'
 import PageHeader from '@/components/site/PageHeader'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/lib/i18n'
 import type { Faq as FaqItem } from '@/types/models'
 
 interface Props {
@@ -11,51 +12,26 @@ interface Props {
   faqs: FaqItem[]
 }
 
-const FALLBACK: FaqItem[] = [
-  {
-    id: -1,
-    question: 'Mulai usia berapa anak bisa ikut kelas?',
-    answer:
-      'Kelas pengenalan air dimulai dari usia balita. Pelatih menilai kesiapan anak di sesi pertama sebelum menentukan level yang tepat.',
-  },
-  {
-    id: -2,
-    question: 'Apakah perlu membawa perlengkapan sendiri?',
-    answer:
-      'Cukup bawa baju renang, kacamata, dan handuk. Papan pelampung dan alat bantu latihan sudah kami sediakan.',
-  },
-  {
-    id: -3,
-    question: 'Bagaimana jika sesi latihan terlewat?',
-    answer:
-      'Sesi dapat dijadwalkan ulang dengan pemberitahuan sebelumnya sesuai ketersediaan jadwal pelatih.',
-  },
-  {
-    id: -4,
-    question: 'Di mana lokasi kolam latihan?',
-    answer:
-      'Latihan berlangsung di kolam mitra kami di Surabaya. Hubungi kami untuk alamat lengkap dan jadwal kolam terdekat.',
-  },
-  {
-    id: -5,
-    question: 'Apakah tersedia kelas privat?',
-    answer:
-      'Ya, tersedia Private Coaching dengan satu pelatih untuk satu murid. Hubungi kami untuk mengatur jadwal.',
-  },
-]
-
 export default function FaqPage({ meta, faqs }: Props) {
-  const items = faqs.length ? faqs : FALLBACK
+  const { t } = useI18n()
+  const fallback: FaqItem[] = [
+    { id: -1, question: t('support.faq.items.q1'), answer: t('support.faq.items.a1') },
+    { id: -2, question: t('support.faq.items.q2'), answer: t('support.faq.items.a2') },
+    { id: -3, question: t('support.faq.items.q3'), answer: t('support.faq.items.a3') },
+    { id: -4, question: t('support.faq.items.q4'), answer: t('support.faq.items.a4') },
+    { id: -5, question: t('support.faq.items.q5'), answer: t('support.faq.items.a5') },
+  ]
+  const items = faqs.length ? faqs : fallback
   const [open, setOpen] = useState(0)
 
   return (
     <>
       <Seo title={meta.title} description={meta.description} />
       <PageHeader
-        eyebrow="FAQ"
-        title="Pertanyaan yang sering diajukan"
-        description="Hal-hal yang paling sering ditanyakan seputar kelas renang di Tirta Nirwana."
-        crumbs={[{ label: 'FAQ' }]}
+        eyebrow={t('nav.faq')}
+        title={t('support.faq.title')}
+        description={t('support.faq.description')}
+        crumbs={[{ label: t('nav.faq') }]}
       />
 
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28" data-aos="fade-up">

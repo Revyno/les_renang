@@ -8,6 +8,7 @@ import SectionHeading from '@/components/home/SectionHeading'
 import { Button } from '@/components/ui/button'
 import { cld, img } from '@/lib/media'
 import { useSite, waLink } from '@/lib/site'
+import { useI18n } from '@/lib/i18n'
 import type { Service, Program } from '@/types/models'
 
 interface Props {
@@ -26,100 +27,97 @@ const SWIM_PHOTOS = [
   'teacher/IMG_3599.JPG',
 ]
 
-// Curated defaults so the page never renders empty before the CMS is filled.
-const FALLBACK_SERVICES: Service[] = [
-  {
-    icon_class: null,
-    title: 'Kelas Bayi & Balita',
-    short_desc: 'Pengenalan air yang lembut bersama orang tua untuk membangun rasa nyaman sejak dini.',
-    description: null,
-  },
-  {
-    icon_class: null,
-    title: 'Kelas Anak',
-    short_desc: 'Dasar gaya bebas, dada, dan punggung dalam kelompok kecil sesuai level.',
-    description: null,
-  },
-  {
-    icon_class: null,
-    title: 'Kelas Dewasa',
-    short_desc: 'Belajar dari nol atau memperbaiki teknik — jadwal fleksibel untuk pekerja.',
-    description: null,
-  },
-  {
-    icon_class: null,
-    title: 'Private Coaching',
-    short_desc: 'Satu pelatih untuk satu murid, fokus penuh pada target pribadi.',
-    description: null,
-  },
-  {
-    icon_class: null,
-    title: 'Persiapan Kompetisi',
-    short_desc: 'Latihan start, pembalikan, dan stamina untuk atlet yang bersiap lomba.',
-    description: null,
-  },
-]
-
-const FALLBACK_PROGRAMS: Program[] = [
-  {
-    id: 1,
-    name: 'Kelas Bayi & Balita',
-    age_range: '6 bln – 4 thn',
-    schedule: 'Sabtu & Minggu pagi',
-    price: 'Mulai Rp350rb',
-    thumbnail: null,
-    instructor: null,
-    description:
-      'Sesi air yang hangat dan aman bersama orang tua. Fokus pada rasa nyaman, kontrol napas, dan gerak dasar melalui permainan.',
-  },
-  {
-    id: 2,
-    name: 'Kelas Anak',
-    age_range: '5 – 12 thn',
-    schedule: 'Senin, Rabu, Jumat',
-    price: 'Mulai Rp450rb',
-    thumbnail: null,
-    instructor: null,
-    description:
-      'Dasar gaya bebas, dada, dan punggung dalam kelompok kecil. Pelatih menyesuaikan tempo sesuai level tiap anak.',
-  },
-  {
-    id: 3,
-    name: 'Kelas Dewasa',
-    age_range: '13 thn ke atas',
-    schedule: 'Jadwal fleksibel',
-    price: 'Mulai Rp500rb',
-    thumbnail: null,
-    instructor: null,
-    description:
-      'Belajar dari nol atau memperbaiki teknik. Jadwal lentur untuk pekerja, dengan pendekatan sabar dan bertahap.',
-  },
-  {
-    id: 4,
-    name: 'Private Coaching',
-    age_range: 'Semua usia',
-    schedule: 'Sesuai kesepakatan',
-    price: 'Mulai Rp150rb/sesi',
-    thumbnail: null,
-    instructor: null,
-    description:
-      'Satu pelatih untuk satu murid. Perhatian penuh pada target pribadi, dari mengatasi takut air hingga menyempurnakan gaya.',
-  },
-  {
-    id: 5,
-    name: 'Persiapan Kompetisi',
-    age_range: 'Atlet muda',
-    schedule: '3–4x seminggu',
-    price: 'Hubungi kami',
-    thumbnail: null,
-    instructor: null,
-    description:
-      'Program intensif teknik start, pembalikan, dan stamina. Untuk perenang yang serius menuju lomba.',
-  },
-]
-
 export default function ServicesPage({ meta, services, programs }: Props) {
   const site = useSite()
+  const { t } = useI18n()
+
+  // Curated defaults so the page never renders empty before the CMS is filled.
+  const FALLBACK_SERVICES: Service[] = [
+    {
+      icon_class: null,
+      title: t('services.fbBabyTitle'),
+      short_desc: t('services.fbBabyDesc'),
+      description: null,
+    },
+    {
+      icon_class: null,
+      title: t('services.fbKidsTitle'),
+      short_desc: t('services.fbKidsDesc'),
+      description: null,
+    },
+    {
+      icon_class: null,
+      title: t('services.fbAdultTitle'),
+      short_desc: t('services.fbAdultDesc'),
+      description: null,
+    },
+    {
+      icon_class: null,
+      title: t('services.fbPrivateTitle'),
+      short_desc: t('services.fbPrivateDesc'),
+      description: null,
+    },
+    {
+      icon_class: null,
+      title: t('services.fbCompTitle'),
+      short_desc: t('services.fbCompDesc'),
+      description: null,
+    },
+  ]
+
+  const FALLBACK_PROGRAMS: Program[] = [
+    {
+      id: 1,
+      name: t('services.fbBabyTitle'),
+      age_range: t('services.p1Age'),
+      schedule: t('services.p1Sched'),
+      price: t('services.p1Price'),
+      thumbnail: null,
+      instructor: null,
+      description: t('services.p1Desc'),
+    },
+    {
+      id: 2,
+      name: t('services.fbKidsTitle'),
+      age_range: t('services.p2Age'),
+      schedule: t('services.p2Sched'),
+      price: t('services.p2Price'),
+      thumbnail: null,
+      instructor: null,
+      description: t('services.p2Desc'),
+    },
+    {
+      id: 3,
+      name: t('services.fbAdultTitle'),
+      age_range: t('services.p3Age'),
+      schedule: t('services.p3Sched'),
+      price: t('services.p3Price'),
+      thumbnail: null,
+      instructor: null,
+      description: t('services.p3Desc'),
+    },
+    {
+      id: 4,
+      name: t('services.fbPrivateTitle'),
+      age_range: t('services.p4Age'),
+      schedule: t('services.p4Sched'),
+      price: t('services.p4Price'),
+      thumbnail: null,
+      instructor: null,
+      description: t('services.p4Desc'),
+    },
+    {
+      id: 5,
+      name: t('services.fbCompTitle'),
+      age_range: t('services.p5Age'),
+      schedule: t('services.p5Sched'),
+      price: t('services.p5Price'),
+      thumbnail: null,
+      instructor: null,
+      description: t('services.p5Desc'),
+    },
+  ]
+
   const serviceList = services.length > 0 ? services : FALLBACK_SERVICES
   const programList = programs.length > 0 ? programs : FALLBACK_PROGRAMS
 
@@ -128,19 +126,19 @@ export default function ServicesPage({ meta, services, programs }: Props) {
       <Seo title={meta.title} description={meta.description} />
 
       <PageHeader
-        eyebrow="Layanan"
-        title="Program renang untuk setiap usia dan level"
-        description="Dari pengenalan air untuk pemula hingga persiapan lomba — pilih layanan yang paling sesuai dengan usia dan tujuan Anda."
-        crumbs={[{ label: 'Layanan' }]}
+        eyebrow={t('nav.services')}
+        title={t('services.headerTitle')}
+        description={t('services.headerDesc')}
+        crumbs={[{ label: t('nav.services') }]}
       />
 
       {/* SERVICES GRID */}
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28" data-aos="fade-up">
         <SectionHeading
           align="left"
-          eyebrow="Layanan kami"
-          title="Pilihan kelas untuk setiap perenang"
-          description="Kelompok kecil, pelatih bersertifikat, dan progres yang terukur di setiap program."
+          eyebrow={t('services.gridEyebrow')}
+          title={t('services.gridTitle')}
+          description={t('services.gridDesc')}
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -168,7 +166,7 @@ export default function ServicesPage({ meta, services, programs }: Props) {
                   <p className="text-sm leading-relaxed text-muted-foreground">{s.short_desc}</p>
                 )}
                 <span className="mt-auto inline-flex items-center gap-1.5 pt-2 text-sm font-medium text-brand-500">
-                  Lihat detail
+                  {t('services.cardCta')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
@@ -178,17 +176,17 @@ export default function ServicesPage({ meta, services, programs }: Props) {
           {/* Consultation card (matches reference dark tile) */}
           <div className="flex flex-col justify-between gap-6 rounded-3xl bg-night p-8 text-white" data-aos="fade-up">
             <span className="inline-flex w-fit items-center rounded-full bg-brand-900 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-peach">
-              Butuh saran?
+              {t('services.consultBadge')}
             </span>
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl font-medium leading-tight tracking-tight">
-                Belum yakin program mana yang cocok?
+                {t('services.consultTitle')}
               </h3>
               <p className="text-sm leading-relaxed text-stone-400">
-                Konsultasikan usia dan level — kami bantu pilihkan yang paling pas.
+                {t('services.consultDesc')}
               </p>
               <Button asChild className="w-fit">
-                <Link href="/kontak">Konsultasi gratis</Link>
+                <Link href="/kontak">{t('services.consultCta')}</Link>
               </Button>
             </div>
           </div>
@@ -200,9 +198,9 @@ export default function ServicesPage({ meta, services, programs }: Props) {
         <div className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28">
           <SectionHeading
             align="left"
-            eyebrow="Program & level"
-            title="Kurikulum bertahap, dari kenal air sampai kompetisi"
-            description="Setiap program dikelola dari CMS — jadwal, harga, dan deskripsi selalu ter-update di halaman ini."
+            eyebrow={t('services.programsEyebrow')}
+            title={t('services.programsTitle')}
+            description={t('services.programsDesc')}
           />
 
           <div className="mt-16 flex flex-col gap-16 md:gap-24">
@@ -258,14 +256,14 @@ export default function ServicesPage({ meta, services, programs }: Props) {
                       {p.instructor && (
                         <span className="inline-flex items-center gap-2">
                           <CalendarDays className="h-4 w-4 text-brand-500" />
-                          Pelatih: {p.instructor}
+                          {t('services.coachLabel')} {p.instructor}
                         </span>
                       )}
                     </div>
 
                     <Button asChild size="lg" className="mt-7">
                       <Link href="/daftar">
-                        Daftar
+                        {t('services.enroll')}
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </Button>
@@ -281,16 +279,16 @@ export default function ServicesPage({ meta, services, programs }: Props) {
       <section className="mx-auto max-w-screen-2xl px-4 py-20 md:px-10 md:py-28" data-aos="fade-up">
         <div className="overflow-hidden rounded-4xl bg-brand-500 px-6 py-14 text-center text-white md:px-16 md:py-20">
           <h2 className="mx-auto max-w-2xl text-3xl font-medium leading-tight tracking-tight md:text-4xl lg:text-5xl">
-            Siap mulai berenang bersama kami?
+            {t('services.ctaTitle')}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-brand-50">
-            Tim kami akan membantu memilih program, jadwal, dan level yang paling tepat untuk Anda.
+            {t('services.ctaDesc')}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Button asChild size="lg" className="bg-white text-brand-600 shadow-sm hover:bg-white/90">
               <Link href="/kontak">
                 <Phone className="h-4 w-4" />
-                Hubungi Kami
+                {t('services.ctaCall')}
               </Link>
             </Button>
             <Button

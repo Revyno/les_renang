@@ -6,6 +6,7 @@ import SiteLayout from '@/Layouts/SiteLayout'
 import PageHeader from '@/components/site/PageHeader'
 import { cn } from '@/lib/utils'
 import { img } from '@/lib/media'
+import { useI18n } from '@/lib/i18n'
 import type { BlogPost, Paginated } from '@/types/models'
 
 interface Props {
@@ -14,20 +15,21 @@ interface Props {
 }
 
 export default function BlogPage({ meta, blogs }: Props) {
+  const { t } = useI18n()
   return (
     <>
       <Seo title={meta.title} description={meta.description} />
       <PageHeader
-        eyebrow="Blog"
-        title="Berita & Blog Terbaru"
-        description="Tips latihan, wawasan, dan kabar terbaru seputar dunia renang."
-        crumbs={[{ label: 'Blog' }]}
+        eyebrow={t('nav.blog')}
+        title={t('blog.headerTitle')}
+        description={t('blog.headerDesc')}
+        crumbs={[{ label: t('nav.blog') }]}
       />
 
       <section className="mx-auto max-w-screen-2xl px-4 py-16 md:px-10 md:py-24">
         {blogs.data.length === 0 ? (
           <p className="py-16 text-center text-muted-foreground">
-            Belum ada artikel. Nantikan tulisan terbaru dari kami segera.
+            {t('blog.empty')}
           </p>
         ) : (
           <div className="grid gap-8 md:grid-cols-3">
@@ -52,7 +54,7 @@ export default function BlogPage({ meta, blogs }: Props) {
                 <span className="text-xl font-semibold leading-snug tracking-tight text-foreground">{post.title}</span>
                 {post.excerpt && <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>}
                 <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-500">
-                  Baca selengkapnya
+                  {t('blog.readMore')}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>

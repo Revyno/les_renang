@@ -3,7 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InstructorsResource\Pages;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Instructor;
+use App\Support\Media;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -63,10 +65,10 @@ class InstructorsResource extends Resource
                        ->label('Bio')
                        ->required(),
 
-                        Forms\Components\FileUpload::make('photo')
-                            ->required() 
+                        CloudinaryUpload::make('photo')
+                            ->required()
                             ->image()
-                            ->directory('instructors')
+                            ->directory('les-renang/cms/instructors')
                             ->maxSize(1024),
                         
                
@@ -107,7 +109,7 @@ class InstructorsResource extends Resource
               
                Tables\Columns\TextColumn::make('bio'),
 
-                Tables\Columns\ImageColumn::make('photo')->circular(),
+                Tables\Columns\ImageColumn::make('photo')->getStateUsing(fn ($record) => Media::url($record->photo))->circular(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y, H:i')
                     ->sortable(),

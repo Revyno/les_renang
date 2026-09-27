@@ -2,26 +2,26 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
-     *
-     * @return void
+     * Buat akun admin untuk login panel Filament (/admin).
+     * Idempotent: aman dijalankan berulang, tidak menduplikat email.
      */
-    public function run()
+    public function run(): void
     {
-        \App\Models\User::create([
-        'name' => 'Admin',
-        'email' => 'admin@admin.com',
-        'password' => 'admin123',
-        'role' => 'admin',
-        'email_verified_at' => now(),
-        'remember_token' => null,
-        'created_at' => now(),
-    ]);
+        User::updateOrCreate(
+            ['email' => 'admin@admin.com'],
+            [
+                'name'              => 'Admin',
+                'password'          => Hash::make('admin123'),
+                'role'              => 'admin',
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }

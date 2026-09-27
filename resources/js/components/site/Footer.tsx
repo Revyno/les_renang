@@ -2,19 +2,7 @@ import { Link } from '@inertiajs/react'
 import { Instagram, Facebook, XTwitter } from '@/components/site/SocialIcons'
 import { BRAND } from '@/lib/brand'
 import { useSite } from '@/lib/site'
-
-const NAV = [
-  { label: 'Beranda', href: '/' },
-  { label: 'Layanan', href: '/layanan' },
-  { label: 'Tentang Kami', href: '/tentang' },
-  { label: 'Tim Pelatih', href: '/tentang#tim' },
-]
-
-const INFO = [
-  { label: 'Artikel & Blog', href: '/blog' },
-  { label: 'FAQ', href: '/faq' },
-  { label: 'Kontak', href: '/kontak' },
-]
+import { useI18n } from '@/lib/i18n'
 
 const SOCIAL_ICON: Record<string, typeof Instagram> = {
   instagram: Instagram,
@@ -24,9 +12,23 @@ const SOCIAL_ICON: Record<string, typeof Instagram> = {
 }
 
 export default function Footer() {
+  const { t } = useI18n()
   const year = new Date().getFullYear()
   const site = useSite()
   const socials = site.social ? Object.entries(site.social) : []
+
+  const NAV = [
+    { label: t('nav.home'), href: '/' },
+    { label: t('nav.services'), href: '/layanan' },
+    { label: t('site.footer.about'), href: '/tentang' },
+    { label: t('site.footer.coaches'), href: '/tentang#tim' },
+  ]
+
+  const INFO = [
+    { label: t('site.footer.articles'), href: '/blog' },
+    { label: t('nav.faq'), href: '/faq' },
+    { label: t('site.footer.contact'), href: '/kontak' },
+  ]
 
   return (
     <footer className="bg-night text-stone-300">
@@ -46,7 +48,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-stone-400">
-              Kursus renang profesional untuk segala usia yang aman, menyenangkan, dan terarah.
+              {t('site.footer.description')}
             </p>
             {socials.length > 0 && (
               <div className="flex gap-2">
@@ -70,7 +72,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col gap-3.5 text-sm md:col-span-3 md:col-start-6">
-            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">Navigasi</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">{t('site.footer.navigation')}</span>
             {NAV.map((item) => (
               <Link key={item.href} href={item.href} className="text-stone-200 transition-colors hover:text-brand-400">
                 {item.label}
@@ -79,7 +81,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col gap-3.5 text-sm md:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">Informasi</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">{t('site.footer.information')}</span>
             {INFO.map((item) => (
               <Link key={item.href} href={item.href} className="text-stone-200 transition-colors hover:text-brand-400">
                 {item.label}
@@ -88,7 +90,7 @@ export default function Footer() {
           </div>
 
           <div className="col-span-2 flex flex-col gap-3.5 text-sm md:col-span-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">Kontak</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-stone-500">{t('site.footer.contact')}</span>
             {site.address && <span className="text-stone-200">{site.address}</span>}
             {site.email && (
               <a href={`mailto:${site.email}`} className="text-stone-200 hover:text-brand-400">
@@ -109,8 +111,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-2 border-t border-night-line pt-6 text-xs text-stone-500 sm:flex-row">
-          <span>© {year} {BRAND.name}. Hak cipta dilindungi.</span>
-          <span>Sekolah Renang · Surabaya</span>
+          <span>© {year} {BRAND.name}. {t('site.footer.rights')}</span>
+          <span>{t('site.footer.location')}</span>
         </div>
       </div>
     </footer>

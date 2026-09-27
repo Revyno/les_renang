@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdResource\Pages;
 use App\Filament\Resources\AdResource\RelationManagers;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Ad;
+use App\Support\Media;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -27,8 +29,9 @@ class AdResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('title')->required(),
                         Forms\Components\Textarea::make('description'),
-                        Forms\Components\FileUpload::make('image')
-                            ->directory('ads')
+                        CloudinaryUpload::make('image')
+                            ->cloudinaryResourceType('auto')
+                            ->directory('les-renang/cms/ads')
                             ->required(),
                         Forms\Components\TextInput::make('url')->url()->required(),
                         Forms\Components\Select::make('position')
@@ -62,7 +65,7 @@ class AdResource extends Resource
     {
         return $table
            ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')->getStateUsing(fn ($record) => Media::url($record->image)),
                 Tables\Columns\TextColumn::make('title')->searchable(),
                 Tables\Columns\TextColumn::make('position'),
                 Tables\Columns\TextColumn::make('price')->money('IDR', true),

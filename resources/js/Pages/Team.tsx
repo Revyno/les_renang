@@ -3,16 +3,18 @@ import PageHeader from '@/components/PageHeader';
 import SectionHeading from '@/components/SectionHeading';
 import TeamCard from '@/components/TeamCard';
 import CtaBand from '@/components/CtaBand';
+import { useI18n } from '@/lib/i18n';
 import type { Team } from '@/types/models';
 
 export default function TeamPage({ teams }: { teams: Team[] }) {
+    const { t } = useI18n();
     return (
         <>
-            <Head title="Tim Kami" />
+            <Head title={t('about.teamTitle')} />
             <PageHeader
-                title="Tim Kami"
-                subtitle="Kenali pelatih dan staf berpengalaman yang mendampingi setiap murid."
-                crumbs={[{ label: 'Tim' }]}
+                title={t('about.teamTitle')}
+                subtitle={t('about.teamSubtitle')}
+                crumbs={[{ label: t('about.teamCrumb') }]}
             />
 
             <section className="container py-20">
@@ -23,7 +25,7 @@ export default function TeamPage({ teams }: { teams: Team[] }) {
                         ))}
                     </div>
                 ) : (
-                    <SectionHeading title="Belum ada anggota tim" description="Informasi tim akan segera tersedia." />
+                    <SectionHeading title={t('about.teamEmptyTitle')} description={t('about.teamEmptyDesc')} />
                 )}
             </section>
 

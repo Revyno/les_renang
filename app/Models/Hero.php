@@ -25,10 +25,10 @@ class Hero extends Model
         'is_active' => 'boolean'
     ];
 
-    // Accessor untuk URL gambar
+    // Accessor untuk URL gambar (Cloudinary-aware via Media)
     public function getImageUrlAttribute()
     {
-        return $this->image ? asset('storage/'.$this->image) : asset('images/default-hero.jpg');
+        return \App\Support\Media::url($this->image, 'images/default-hero.jpg');
     }
 
     // Scope untuk data aktif

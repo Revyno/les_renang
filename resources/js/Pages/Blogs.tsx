@@ -5,6 +5,7 @@ import BlogCard from '@/components/BlogCard';
 import Pagination from '@/components/Pagination';
 import { routes } from '@/lib/routes';
 import { cn } from '@/lib/utils';
+import { useI18n } from '@/lib/i18n';
 import type { Blog, Category, Paginated } from '@/types/models';
 
 export default function Blogs({
@@ -16,13 +17,14 @@ export default function Blogs({
     categories: Category[];
     categorySlug: string | null;
 }) {
+    const { t } = useI18n();
     return (
         <>
-            <Head title="Blog" />
+            <Head title={t('nav.blog')} />
             <PageHeader
-                title="Blog & Artikel"
-                subtitle="Tips, cerita, dan wawasan seputar renang dari tim Tirta Nirwana."
-                crumbs={[{ label: 'Blog' }]}
+                title={t('blog.listTitle')}
+                subtitle={t('blog.listSubtitle')}
+                crumbs={[{ label: t('nav.blog') }]}
             />
 
             <section className="container py-20">
@@ -38,7 +40,7 @@ export default function Blogs({
                         ) : (
                             <div className="rounded-2xl border border-dashed border-border py-20 text-center">
                                 <Newspaper className="mx-auto h-10 w-10 text-muted-foreground" />
-                                <p className="mt-4 text-muted-foreground">Belum ada artikel pada kategori ini.</p>
+                                <p className="mt-4 text-muted-foreground">{t('blog.emptyCategory')}</p>
                             </div>
                         )}
                         <Pagination links={blogs.links} />
@@ -47,7 +49,7 @@ export default function Blogs({
                     {/* Sidebar */}
                     <aside className="lg:sticky lg:top-24 lg:self-start">
                         <div className="rounded-2xl border border-border bg-card p-6">
-                            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">Kategori</h3>
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">{t('blog.categories')}</h3>
                             <ul className="mt-4 space-y-1.5">
                                 <li>
                                     <Link
@@ -59,7 +61,7 @@ export default function Blogs({
                                                 : 'text-muted-foreground hover:bg-secondary',
                                         )}
                                     >
-                                        Semua Artikel
+                                        {t('blog.allArticles')}
                                     </Link>
                                 </li>
                                 {categories.map((cat) => (

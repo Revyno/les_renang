@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react'
 import { ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { cld } from '@/lib/media'
+import { useI18n } from '@/lib/i18n'
 
 interface Crumb {
   label: string
@@ -18,6 +19,7 @@ interface PageHeaderProps {
 }
 
 export default function PageHeader({ title, description, eyebrow, crumbs = [], image = 'hero-bg.jpg' }: PageHeaderProps) {
+  const { t } = useI18n()
   return (
     <section className="relative overflow-hidden bg-night pt-28 md:pt-32">
       <img
@@ -34,7 +36,7 @@ export default function PageHeader({ title, description, eyebrow, crumbs = [], i
       <div className="relative mx-auto max-w-screen-2xl px-4 pb-14 pt-10 md:px-10 md:pb-20 md:pt-16" data-aos="fade-up">
         <nav className="mb-5 flex items-center gap-1.5 text-sm text-white/70">
           <Link href="/" className="transition-colors hover:text-white">
-            Beranda
+            {t('nav.home')}
           </Link>
           {crumbs.map((c) => (
             <span key={c.label} className="flex items-center gap-1.5">

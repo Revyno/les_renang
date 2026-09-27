@@ -3,7 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeamsResource\Pages;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Teams;
+use App\Support\Media;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -26,10 +28,10 @@ class TeamsResource extends Resource
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\FileUpload::make('imgUrl')
+                        CloudinaryUpload::make('imgUrl')
                             ->label('Team Member Image')
                             ->image()
-                            ->directory('teams')
+                            ->directory('les-renang/cms/teams')
                             ->required(),
                         Forms\Components\TextInput::make('name')
                             ->label('Name')
@@ -63,7 +65,8 @@ class TeamsResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('imgUrl')
-                    ->label('Image'),
+                    ->label('Image')
+                    ->getStateUsing(fn ($record) => Media::url($record->imgUrl)),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
                     ->searchable()

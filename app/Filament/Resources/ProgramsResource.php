@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProgramsResource\Pages;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Program;
 use App\Models\Classes;
 use App\Models\Instructor;
@@ -104,11 +105,10 @@ class ProgramsResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->columnSpan('full'),
                             
-                        Forms\Components\FileUpload::make('thumbnail')
+                        CloudinaryUpload::make('thumbnail')
                             ->label('Thumbnail')
                             ->image()
-                            ->directory('program-thumbnails')
-                            ->visibility('public')
+                            ->directory('les-renang/cms/programs')
                             ->columnSpan('full'),
                     ])
                     ->columns(2)

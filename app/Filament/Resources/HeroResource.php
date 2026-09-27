@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\HeroResource\Pages;
 use App\Filament\Resources\HeroResource\RelationManagers;
+use App\Filament\Components\CloudinaryUpload;
 use App\Models\Hero;
+use App\Support\Media;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -36,14 +38,15 @@ class HeroResource extends Resource
                     ->required()
                     ->maxLength(500),
                 
-                Forms\Components\FileUpload::make('image')
-                    ->directory('hero-images')
+                CloudinaryUpload::make('image')
+                    ->directory('les-renang/cms/hero')
                     ->image()
                     ->required()
                     ->helperText('Rekomendasi ukuran: 1920x1080 px'),
                 
-                Forms\Components\FileUpload::make('video_background')
-                    ->directory('hero-videos')
+                CloudinaryUpload::make('video_background')
+                    ->directory('les-renang/cms/hero')
+                    ->cloudinaryResourceType('video')
                     ->acceptedFileTypes(['video/mp4'])
                     ->helperText('Upload video MP4 (opsional)'),
                 
@@ -71,6 +74,7 @@ class HeroResource extends Resource
     {
          return $table->columns([
             Tables\Columns\ImageColumn::make('image')
+                ->getStateUsing(fn ($record) => Media::url($record->image))
                 ->label('Gambar'),
                 
             Tables\Columns\TextColumn::make('title')
