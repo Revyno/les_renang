@@ -7,11 +7,11 @@ interface SeoProps {
   url?: string
 }
 
-const SITE = 'Les Renang'
-const DEFAULT_DESC = 'Kursus & program renang profesional untuk semua usia. Instruktur bersertifikat, kolam aman, jadwal fleksibel.'
+const SITE = 'Tirta Nirwana'
+const DEFAULT_DESC = 'Sekolah renang profesional di Surabaya untuk segala usia. Pelatih bersertifikat, kolam aman, jadwal fleksibel.'
 
 // Centralises <title>, meta description, and Open Graph/Twitter tags.
-// createInertiaApp already appends " — Les Renang" to the title prop.
+// createInertiaApp already appends " — Tirta Nirwana" to the title prop.
 export default function Seo({ title, description = DEFAULT_DESC, image, url }: SeoProps) {
   const fullTitle = title ? `${title} — ${SITE}` : SITE
   return (

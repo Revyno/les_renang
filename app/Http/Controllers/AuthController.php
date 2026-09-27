@@ -20,7 +20,7 @@ class AuthController extends Controller
     public function showLogin(): Response
     {
         return Inertia::render('Auth/Login', [
-            'meta' => ['title' => 'Masuk', 'description' => 'Masuk ke akun Les Renang Anda.'],
+            'meta' => ['title' => 'Masuk', 'description' => 'Masuk ke akun Tirta Nirwana Anda.'],
         ]);
     }
 
@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function showRegister(): Response
     {
         return Inertia::render('Auth/Register', [
-            'meta' => ['title' => 'Daftar Akun', 'description' => 'Buat akun Les Renang untuk mulai mendaftar program.'],
+            'meta' => ['title' => 'Daftar Akun', 'description' => 'Buat akun Tirta Nirwana untuk mulai mendaftar program.'],
         ]);
     }
 

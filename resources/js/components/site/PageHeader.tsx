@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react'
 import { ChevronRight } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { cld } from '@/lib/media'
 
 interface Crumb {
@@ -10,38 +11,54 @@ interface Crumb {
 interface PageHeaderProps {
   title: string
   description?: string
+  eyebrow?: string
   crumbs?: Crumb[]
+  /** Local asset path relative to assets/img (e.g. 'services.jpg'). */
+  image?: string
 }
 
-export default function PageHeader({ title, description, crumbs = [] }: PageHeaderProps) {
+export default function PageHeader({ title, description, eyebrow, crumbs = [], image = 'hero-bg.jpg' }: PageHeaderProps) {
   return (
-    <section className="relative overflow-hidden pt-28 md:pt-32">
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-10"
-        style={{ backgroundImage: `url(${cld('page-title-bg.webp')})` }}
+    <section className="relative overflow-hidden bg-night pt-28 md:pt-32">
+      <img
+        src={cld(image)}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover object-[center_40%]"
+        loading="eager"
         aria-hidden
       />
-      <div className="pointer-events-none absolute -right-24 -top-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
-      <div className="container relative py-14 md:py-20">
-        <nav className="mb-4 flex items-center gap-1.5 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-primary">
+      {/* Left-weighted dark gradient keeps the left-aligned copy readable over any photo. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden />
+
+      <div className="relative mx-auto max-w-screen-2xl px-4 pb-14 pt-10 md:px-10 md:pb-20 md:pt-16" data-aos="fade-up">
+        <nav className="mb-5 flex items-center gap-1.5 text-sm text-white/70">
+          <Link href="/" className="transition-colors hover:text-white">
             Beranda
           </Link>
           {crumbs.map((c) => (
             <span key={c.label} className="flex items-center gap-1.5">
               <ChevronRight className="h-3.5 w-3.5" />
               {c.href ? (
-                <Link href={c.href} className="hover:text-primary">
+                <Link href={c.href} className="transition-colors hover:text-white">
                   {c.label}
                 </Link>
               ) : (
-                <span className="text-foreground/80">{c.label}</span>
+                <span className="text-white">{c.label}</span>
               )}
             </span>
           ))}
         </nav>
-        <h1 className="max-w-3xl text-3xl font-bold tracking-tight text-primary md:text-5xl">{title}</h1>
-        {description && <p className="mt-4 max-w-2xl text-lg text-muted-foreground">{description}</p>}
+
+        {eyebrow && (
+          <span className="mb-4 inline-flex items-center rounded-full bg-brand-500 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+            {eyebrow}
+          </span>
+        )}
+        <h1 className={cn('max-w-4xl text-4xl font-medium leading-[1.08] tracking-tight text-white md:text-6xl')}>
+          {title}
+        </h1>
+        {description && <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/85">{description}</p>}
       </div>
     </section>
   )

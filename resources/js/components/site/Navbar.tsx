@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link, usePage } from '@inertiajs/react'
-import { Menu, X, Waves } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { BRAND } from '@/lib/brand'
 import type { SharedProps } from '@/types/models'
 
 const NAV = [
   { label: 'Beranda', href: '/' },
-  { label: 'Tentang', href: '/tentang' },
   { label: 'Layanan', href: '/layanan' },
+  { label: 'Tentang', href: '/tentang' },
   { label: 'Blog', href: '/blog' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Kontak', href: '/kontak' },
 ]
 
 export default function Navbar() {
@@ -28,55 +27,89 @@ export default function Navbar() {
   }, [])
 
   const isActive = (href: string) => (href === '/' ? url === '/' : url.startsWith(href))
+  // Transparent white-on-image treatment only over the home hero (a dark image
+  // sits behind it there); solid everywhere else so text stays legible.
+  const onHero = url === '/' && !scrolled && !open
 
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
-        scrolled ? 'bg-background/90 shadow-sm backdrop-blur border-b border-border/60' : 'bg-transparent',
+        'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
+        onHero ? 'bg-transparent' : 'border-b border-border bg-background/90 backdrop-blur',
       )}
     >
-      <div className="container flex h-16 items-center justify-between md:h-20">
-        <Link href="/" className="flex items-center gap-2 font-bold text-primary">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-primary text-primary-foreground">
-            <Waves className="h-5 w-5" />
+      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 md:h-20 md:px-10">
+        {/* Wordmark */}
+        <Link
+          href="/"
+          className={cn('flex items-center gap-2.5', onHero ? 'text-white' : 'text-foreground')}
+        >
+          <img src={BRAND.logo} alt={BRAND.name} className="h-10 w-10 shrink-0 object-contain md:h-11 md:w-11" />
+          <span className="flex flex-col leading-none">
+            <span className="text-lg font-bold tracking-tight">
+              Tirta<span className={onHero ? 'text-peach' : 'text-brand-500'}>Nirwana</span>
+            </span>
+            <span className={cn('mt-0.5 text-[10px] font-medium tracking-wide', onHero ? 'text-white/80' : 'text-muted-foreground')}>
+              {BRAND.tagline}
+            </span>
           </span>
-          <span className="text-lg tracking-tight">Les Renang</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
-                isActive(item.href) ? 'text-primary' : 'text-foreground/80',
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        {/* Center pill nav */}
+        <nav className="hidden items-center gap-1.5 md:flex">
+          {NAV.map((item) => {
+            const active = isActive(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex h-10 items-center rounded-full px-4 text-sm font-medium transition-colors',
+                  onHero
+                    ? active
+                      ? 'bg-white text-foreground'
+                      : 'bg-white/15 text-white backdrop-blur hover:bg-white/25'
+                    : active
+                      ? 'bg-brand-500 text-white'
+                      : 'text-foreground/80 hover:bg-secondary hover:text-foreground',
+                )}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Actions */}
+        <div className="hidden items-center gap-2.5 md:flex">
           {user ? (
-            <Link href="/logout" method="post" as="button" className="text-sm font-medium text-foreground/80 hover:text-primary">
+            <Link
+              href="/logout"
+              method="post"
+              as="button"
+              className={cn('text-sm font-medium', onHero ? 'text-white/90 hover:text-white' : 'text-foreground/80 hover:text-brand-500')}
+            >
               Keluar
             </Link>
           ) : (
-            <Link href="/login" className="text-sm font-medium text-foreground/80 hover:text-primary">
+            <Link
+              href="/login"
+              className={cn('text-sm font-medium', onHero ? 'text-white/90 hover:text-white' : 'text-foreground/80 hover:text-brand-500')}
+            >
               Masuk
             </Link>
           )}
-          <Button asChild size="sm">
-            <Link href="/daftar">Daftar Sekarang</Link>
-          </Button>
+          <Link
+            href="/daftar"
+            className="flex h-11 items-center rounded-full bg-brand-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+          >
+            Daftar Sekarang
+          </Link>
         </div>
 
         <button
           type="button"
-          className="grid h-10 w-10 place-items-center rounded-lg text-foreground md:hidden"
+          className={cn('grid h-10 w-10 place-items-center rounded-lg md:hidden', onHero ? 'text-white' : 'text-foreground')}
           onClick={() => setOpen((v) => !v)}
           aria-label="Buka menu"
           aria-expanded={open}
@@ -86,35 +119,39 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-border/60 bg-background md:hidden">
-          <nav className="container flex flex-col py-4">
+        <div className="border-t border-border bg-background md:hidden">
+          <nav className="mx-auto flex max-w-screen-2xl flex-col px-4 py-4">
             {NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  'py-2.5 text-sm font-medium hover:text-primary',
-                  isActive(item.href) ? 'text-primary' : 'text-foreground/80',
+                  'rounded-full px-4 py-2.5 text-sm font-medium',
+                  isActive(item.href) ? 'bg-brand-500 text-white' : 'text-foreground/80 hover:bg-secondary',
                 )}
               >
                 {item.label}
               </Link>
             ))}
-            {user ? (
-              <Link href="/logout" method="post" as="button" onClick={() => setOpen(false)} className="py-2.5 text-left text-sm font-medium text-foreground/80 hover:text-primary">
-                Keluar
-              </Link>
-            ) : (
-              <Link href="/login" onClick={() => setOpen(false)} className="py-2.5 text-sm font-medium text-foreground/80 hover:text-primary">
-                Masuk
-              </Link>
-            )}
-            <Button asChild size="sm" className="mt-3 w-full">
-              <Link href="/daftar" onClick={() => setOpen(false)}>
+            <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3">
+              {user ? (
+                <Link href="/logout" method="post" as="button" onClick={() => setOpen(false)} className="px-4 py-2 text-left text-sm font-medium text-foreground/80">
+                  Keluar
+                </Link>
+              ) : (
+                <Link href="/login" onClick={() => setOpen(false)} className="px-4 py-2 text-sm font-medium text-foreground/80">
+                  Masuk
+                </Link>
+              )}
+              <Link
+                href="/daftar"
+                onClick={() => setOpen(false)}
+                className="flex h-11 items-center justify-center rounded-full bg-brand-500 px-6 text-sm font-semibold text-white"
+              >
                 Daftar Sekarang
               </Link>
-            </Button>
+            </div>
           </nav>
         </div>
       )}

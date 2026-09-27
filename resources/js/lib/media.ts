@@ -1,24 +1,21 @@
-// Cloudinary cloud name is PUBLIC (it appears in every delivery URL). Kept here
-// to avoid threading it through props/hooks; also mirrored server-side in
-// config/services.php. ponytail: read from the Inertia shared prop
-// (cloudinary.cloudName) if it ever needs to differ per environment.
-const CLOUD = 'dzqantey8'
-const FOLDER = 'les-renang'
+// Theme assets live under public/assets/img and are served locally. DB-driven
+// images already arrive as resolved URLs from App\Support\Media (absolute,
+// /assets/…, or /storage/…) so those pass straight through img().
+// ponytail: Cloudinary delivery deferred (PRD Phase 2). When assets are uploaded
+// and CLOUDINARY_CLOUD_NAME is live, point cld() at res.cloudinary.com/<cloud>/…
+const BASE = '/assets/img'
 
-// Deliver a theme asset (originally under public/assets/img) via Cloudinary CDN.
-// `rel` is the path relative to assets/img, e.g. 'teacher/abo-1.jpg'.
-export function cld(rel: string, transform = 'f_auto,q_auto'): string {
-  const id = rel.replace(/^\/+/, '').replace(/\.[a-z0-9]+$/i, '')
-  return `https://res.cloudinary.com/${CLOUD}/image/upload/${transform}/${FOLDER}/${id}`
+/** Local theme asset by its path relative to assets/img, e.g. 'hero-bg.jpg'. */
+export function cld(rel: string): string {
+  return `${BASE}/${rel.replace(/^\/+/, '')}`
 }
 
-// Local /public asset (non-Cloudinary), e.g. build output or files not synced.
+/** Local /public asset (non-theme), e.g. build output. */
 export function asset(path: string): string {
   return `/${path.replace(/^\/+/, '')}`
 }
 
-// Use `src` when present (already an absolute URL from the server), otherwise a
-// Cloudinary theme-asset fallback given by its assets/img-relative path.
-export function img(src?: string | null, fallbackRel = 'logo-icon.png'): string {
+/** Use `src` when present (already a resolved URL), else a theme-asset fallback. */
+export function img(src?: string | null, fallbackRel = 'logo-mark.png'): string {
   return src && src.length > 0 ? src : cld(fallbackRel)
 }

@@ -1,58 +1,55 @@
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
-import SectionHeading from '@/components/home/SectionHeading'
+import { Plus, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { Faq as FaqItem } from '@/types/models'
+import type { Faq as FaqData } from '@/types/models'
 
-const FALLBACK: FaqItem[] = [
-  { id: 1, question: 'Mulai usia berapa anak bisa ikut les renang?', answer: 'Kami menerima murid mulai usia 4 tahun dengan kelas yang disesuaikan untuk pengenalan air yang aman.' },
-  { id: 2, question: 'Apakah tersedia kelas untuk pemula dewasa?', answer: 'Tentu. Kelas dewasa kami cocok untuk yang belum pernah berenang sama sekali maupun yang ingin memperbaiki teknik.' },
-  { id: 3, question: 'Bagaimana cara mendaftar?', answer: 'Anda bisa mendaftar melalui tombol "Daftar Sekarang" atau menghubungi kami langsung via WhatsApp.' },
-  { id: 4, question: 'Apakah perlu membawa peralatan sendiri?', answer: 'Cukup bawa baju renang dan handuk. Peralatan latihan lainnya kami sediakan.' },
+const FALLBACK: FaqData[] = [
+  { id: 1, question: 'Mulai usia berapa anak bisa ikut kelas?', answer: 'Kelas pengenalan air dapat dimulai sejak balita. Pelatih menilai kesiapan anak di sesi pertama sebelum menentukan level.' },
+  { id: 2, question: 'Apakah perlu membawa perlengkapan sendiri?', answer: 'Cukup bawa baju renang, kacamata, dan handuk. Papan pelampung dan alat bantu latihan kami sediakan.' },
+  { id: 3, question: 'Bagaimana jika sesi latihan terlewat?', answer: 'Sesi dapat dijadwalkan ulang dengan pemberitahuan sebelumnya sesuai kebijakan reschedule kami.' },
+  { id: 4, question: 'Di mana lokasi kolam latihan?', answer: 'Latihan berlangsung di kolam mitra kami di area Surabaya. Hubungi kami untuk detail lokasi terdekat.' },
 ]
 
-export default function Faq({ data }: { data: FaqItem[] }) {
-  const items = data.length ? data : FALLBACK
-  const [open, setOpen] = useState<number | null>(items[0]?.id ?? null)
+export default function Faq({ data }: { data: FaqData[] }) {
+  const faqs = data.length > 0 ? data : FALLBACK
+  const [open, setOpen] = useState(0)
 
   return (
-    <section id="faq" className="py-20 md:py-28">
-      <div className="container">
-        <SectionHeading
-          eyebrow="FAQ"
-          title="Pertanyaan yang Sering Diajukan"
-          description="Belum menemukan jawabannya? Hubungi kami dan tim kami akan membantu."
-        />
-        <div className="mx-auto mt-12 max-w-3xl space-y-3">
-          {items.map((item) => {
-            const expanded = open === item.id
-            return (
-              <div key={item.id} className="overflow-hidden rounded-xl border border-border bg-card">
-                <button
-                  type="button"
-                  onClick={() => setOpen(expanded ? null : item.id)}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-                  aria-expanded={expanded}
-                >
-                  <span className="font-medium text-primary">{item.question}</span>
-                  <ChevronDown
-                    className={cn('h-5 w-5 shrink-0 text-accent transition-transform', expanded && 'rotate-180')}
-                  />
-                </button>
-                <div
+    <section data-aos="fade-up" className="mx-auto flex max-w-screen-2xl flex-col items-center gap-12 px-4 py-20 md:px-10 md:py-24">
+      <div data-aos="fade-up" className="flex flex-col items-center gap-4 text-center">
+        <span className="inline-flex items-center rounded-full bg-brand-600 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+          FAQ
+        </span>
+        <h2 className="text-3xl font-medium leading-[1.1] tracking-tight text-foreground md:text-4xl lg:text-5xl">
+          Pertanyaan yang sering diajukan
+        </h2>
+      </div>
+
+      <div className="flex w-full max-w-3xl flex-col gap-2.5">
+        {faqs.map((f, i) => {
+          const isOpen = open === i
+          return (
+            <div key={f.id} data-aos="fade-up" data-aos-delay={Math.min(i, 5) * 80} className="rounded-2xl bg-stone-100">
+              <button
+                type="button"
+                onClick={() => setOpen(isOpen ? -1 : i)}
+                aria-expanded={isOpen}
+                className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-base font-semibold text-foreground md:text-lg"
+              >
+                {f.question}
+                <span
                   className={cn(
-                    'grid transition-all duration-300',
-                    expanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+                    'grid h-8 w-8 shrink-0 place-items-center rounded-full transition-colors',
+                    isOpen ? 'bg-brand-500 text-white' : 'bg-white text-foreground',
                   )}
                 >
-                  <div className="overflow-hidden">
-                    <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+                  {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                </span>
+              </button>
+              {isOpen && <p className="px-6 pb-6 text-sm leading-relaxed text-muted-foreground md:text-base">{f.answer}</p>}
+            </div>
+          )
+        })}
       </div>
     </section>
   )

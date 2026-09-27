@@ -1,8 +1,10 @@
 import '../css/app.css';
-import { createInertiaApp } from '@inertiajs/react';
+import 'aos/dist/aos.css';
+import { createInertiaApp, router } from '@inertiajs/react';
 import { createRoot } from 'react-dom/client';
+import AOS from 'aos';
 
-const appName = 'Les Renang';
+const appName = 'Tirta Nirwana';
 
 createInertiaApp({
   title: (title) => (title ? `${title} — ${appName}` : appName),
@@ -13,7 +15,17 @@ createInertiaApp({
     return page as { default: React.ComponentType };
   },
   setup({ el, App, props }) {
+    AOS.init({
+      duration: 700,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 80,
+      // Honour users who prefer no motion.
+      disable: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    });
+    // Inertia swaps the DOM without a reload; re-scan so new page elements animate.
+    router.on('success', () => setTimeout(() => AOS.refreshHard(), 0));
     createRoot(el).render(<App {...props} />);
   },
-  progress: { color: '#d96c89' },
+  progress: { color: '#C84B16' },
 });

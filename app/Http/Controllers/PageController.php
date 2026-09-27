@@ -23,7 +23,7 @@ class PageController extends Controller
         return Inertia::render('About', [
             'meta' => [
                 'title' => 'Tentang Kami',
-                'description' => 'Kenali Les Renang: visi, instruktur bersertifikat, dan pendekatan belajar berenang yang aman untuk semua usia.',
+                'description' => 'Kenali Tirta Nirwana: visi, pelatih bersertifikat, dan pendekatan belajar berenang yang aman untuk segala usia.',
             ],
             'about' => Content::about(),
             'stats' => Content::stats(),
@@ -36,7 +36,7 @@ class PageController extends Controller
         return Inertia::render('Services', [
             'meta' => [
                 'title' => 'Layanan & Program',
-                'description' => 'Pilihan layanan dan program les renang Les Renang untuk anak hingga dewasa, dengan jadwal fleksibel.',
+                'description' => 'Pilihan layanan dan program renang Tirta Nirwana untuk anak hingga dewasa, dengan jadwal fleksibel.',
             ],
             'services' => Content::services(),
             'programs' => Content::programs(24),
@@ -48,7 +48,7 @@ class PageController extends Controller
         return Inertia::render('Faq', [
             'meta' => [
                 'title' => 'FAQ',
-                'description' => 'Pertanyaan yang sering diajukan seputar pendaftaran, jadwal, dan program les renang Les Renang.',
+                'description' => 'Pertanyaan yang sering diajukan seputar pendaftaran, jadwal, dan program renang Tirta Nirwana.',
             ],
             'faqs' => Content::faqs(),
         ]);
@@ -63,7 +63,7 @@ class PageController extends Controller
         return Inertia::render('Blog', [
             'meta' => [
                 'title' => 'Blog',
-                'description' => 'Tips latihan, wawasan, dan kabar terbaru seputar dunia renang dari tim Les Renang.',
+                'description' => 'Tips latihan, wawasan, dan kabar terbaru seputar dunia renang dari tim Tirta Nirwana.',
             ],
             'blogs' => $blogs,
         ]);
@@ -88,7 +88,7 @@ class PageController extends Controller
         return Inertia::render('Contact', [
             'meta' => [
                 'title' => 'Kontak',
-                'description' => 'Hubungi Les Renang untuk konsultasi program, jadwal, dan pendaftaran les renang.',
+                'description' => 'Hubungi Tirta Nirwana untuk konsultasi program, jadwal, dan pendaftaran renang.',
             ],
         ]);
     }
@@ -118,7 +118,7 @@ class PageController extends Controller
         return Inertia::render('RegisterProgram', [
             'meta' => [
                 'title' => 'Daftar Program',
-                'description' => 'Pilih program les renang yang sesuai dan daftar dengan mudah bersama Les Renang.',
+                'description' => 'Pilih program renang yang sesuai dan daftar dengan mudah bersama Tirta Nirwana.',
             ],
             'programs' => Content::programs(24),
         ]);

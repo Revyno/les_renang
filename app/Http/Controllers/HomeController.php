@@ -19,7 +19,7 @@ class HomeController extends Controller
         return Inertia::render('Home', [
             'meta' => [
                 'title' => 'Beranda',
-                'description' => 'Les Renang — kursus & program renang profesional untuk semua usia. Instruktur bersertifikat, kolam aman, dan jadwal fleksibel.',
+                'description' => 'Tirta Nirwana — sekolah renang di Surabaya untuk segala usia. Pelatih bersertifikat, kolam aman, dan jadwal fleksibel.',
             ],
             'hero' => Content::hero(),
             'about' => Content::about(),

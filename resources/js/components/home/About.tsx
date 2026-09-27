@@ -1,50 +1,62 @@
-import { CheckCircle2 } from 'lucide-react'
-import SectionHeading from '@/components/home/SectionHeading'
-import { img } from '@/lib/media'
-import type { About as AboutData } from '@/types/models'
+import { Link } from '@inertiajs/react'
+import { ArrowRight } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { cld, img } from '@/lib/media'
+import type { About as AboutData, GalleryItem } from '@/types/models'
 
-const FALLBACK = {
-  title: 'Tentang Les Renang',
-  description:
-    'Kami adalah sekolah renang yang berkomitmen membantu setiap orang belajar berenang dengan aman dan percaya diri. Dengan instruktur bersertifikat dan fasilitas kolam yang terjaga, kami menghadirkan pengalaman belajar yang terstruktur untuk anak-anak maupun dewasa.',
-  img: 'about.jpg',
-}
-
-const POINTS = [
-  'Instruktur bersertifikat & berpengalaman',
-  'Kelas kecil, perhatian personal',
-  'Kolam bersih & standar keamanan',
-  'Jadwal fleksibel untuk semua usia',
+// Intro block + staggered 4-up gallery (reference "Kursus Renang Profesional" section).
+const GALLERY_FALLBACK = [
+  'teacher/20240804_072031.jpg',
+  'teacher/IMG_3473.JPG',
+  'teacher/IMG_3599.JPG',
+  'teacher/20241019_165350.jpg',
 ]
 
-export default function About({ data }: { data: AboutData | null }) {
-  const title = data?.title ?? FALLBACK.title
-  const description = data?.description ?? FALLBACK.description
-  const image = img(data?.img, FALLBACK.img)
+export default function About({ data, gallery }: { data: AboutData | null; gallery: GalleryItem[] }) {
+  const title = data?.title || 'Kursus Renang Profesional untuk Segala Usia'
+  const description =
+    data?.description ||
+    'Tirta Nirwana menghadirkan program renang terstruktur — dari kelas bayi dan anak hingga dewasa dan persiapan kompetisi. Kami menggabungkan keselamatan, metode modern, dan pendekatan personal agar setiap murid berkembang dengan nyaman.'
+  const items =
+    gallery.length > 0
+      ? gallery.slice(0, 4)
+      : GALLERY_FALLBACK.map((image, id) => ({ id, title: null, image: cld(image) }))
 
   return (
-    <section id="tentang" className="py-20 md:py-28">
-      <div className="container grid items-center gap-12 md:grid-cols-2">
-        <div className="relative order-last md:order-first">
-          <div className="absolute -left-4 -top-4 h-full w-full rounded-3xl bg-primary/10" aria-hidden />
-          <img
-            src={image}
-            alt="Tentang Les Renang"
-            className="relative aspect-square w-full rounded-3xl object-cover shadow-lg"
-            loading="lazy"
-          />
-        </div>
-        <div>
-          <SectionHeading eyebrow="Tentang Kami" title={title} description={description} align="left" />
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-            {POINTS.map((point) => (
-              <li key={point} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
-                <span className="text-sm text-foreground/80">{point}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <section className="mx-auto flex max-w-screen-2xl flex-col items-center gap-16 px-4 py-20 md:px-10 md:py-28">
+      <div className="flex max-w-3xl flex-col items-center gap-6 text-center" data-aos="fade-up">
+        <span className="inline-flex items-center rounded-full bg-brand-600 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-white">
+          Sekolah renang di Surabaya
+        </span>
+        <h2 className="text-3xl font-medium leading-[1.12] tracking-tight text-foreground md:text-4xl lg:text-5xl">
+          {title}
+        </h2>
+        <p className="text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>
+        <Link
+          href="/tentang"
+          className="inline-flex h-12 items-center gap-2 rounded-full bg-brand-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+        >
+          Tentang kami
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+
+      <div className="grid w-full grid-cols-2 items-start gap-4 md:grid-cols-4 md:gap-6">
+        {items.map((g, i) => (
+          <div
+            key={g.id}
+            className={cn('overflow-hidden rounded-2xl bg-stone-200', i % 2 === 0 && 'md:mt-10')}
+            data-aos="fade-up"
+            data-aos-delay={Math.min(i, 5) * 80}
+          >
+            <img
+              src={img(g.image, GALLERY_FALLBACK[i % GALLERY_FALLBACK.length])}
+              alt={g.title || ''}
+              className="h-64 w-full object-cover md:h-80"
+              loading="lazy"
+            />
+          </div>
+        ))}
       </div>
     </section>
   )

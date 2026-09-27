@@ -3,11 +3,11 @@ import type { SharedProps, SiteInfo } from '@/types/models'
 
 // Placeholder contact details used until the admin fills the `contacts` settings.
 const FALLBACK: SiteInfo = {
-  address: 'Jl. Kolam Renang No. 1, Indonesia',
+  address: 'Surabaya, Jawa Timur, Indonesia',
   phone: '+62 812 3456 7890',
-  email: 'halo@lesrenang.id',
+  email: 'halo@tirtanirwana.id',
   whatsapp: '6281234567890',
-  whatsapp_message: 'Halo, saya ingin bertanya tentang program les renang.',
+  whatsapp_message: 'Halo Tirta Nirwana, saya ingin bertanya tentang program renang.',
   social: null,
 }
 
