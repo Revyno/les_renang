@@ -11,7 +11,6 @@ const NAV = [
   { key: 'nav.services', href: '/layanan' },
   { key: 'nav.about', href: '/tentang' },
   { key: 'nav.blog', href: '/blog' },
-  { key: 'nav.faq', href: '/faq' },
 ]
 
 export default function Navbar() {

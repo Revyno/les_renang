@@ -21,52 +21,57 @@ class HeroResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photograph';
 
-    protected static ?string $navigationGroup = 'Menagement';
+    protected static ?string $navigationGroup = 'Konten Website';
+    protected static ?int $navigationSort = 10;
     protected static ?string $navigationLabel = 'Hero';
     protected static ?string $label = 'Hero';
+    protected static ?string $modelLabel = 'Hero';
+    protected static ?string $pluralModelLabel = 'Hero';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                    Forms\Components\Card::make()->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                
-                Forms\Components\Textarea::make('subtitle')
-                    ->required()
-                    ->maxLength(500),
-                
-                CloudinaryUpload::make('image')
-                    ->directory('les-renang/cms/hero')
-                    ->image()
-                    ->required()
-                    ->helperText('Rekomendasi ukuran: 1920x1080 px'),
-                
-                CloudinaryUpload::make('video_background')
-                    ->directory('les-renang/cms/hero')
-                    ->cloudinaryResourceType('video')
-                    ->acceptedFileTypes(['video/mp4'])
-                    ->helperText('Upload video MP4 (opsional)'),
-                
-                Forms\Components\TextInput::make('cta_text')
-                    ->label('Tombol Utama - Teks')
-                    ->default('Daftar Sekarang'),
-                
-                Forms\Components\TextInput::make('cta_link')
-                    ->label('Tombol Utama - Link')
-                    ->default('#programs'),
-                
-                Forms\Components\Toggle::make('is_active')
-                    ->label('Aktif')
-                    ->default(true),
-                
-                Forms\Components\TextInput::make('order')
-                    ->numeric()
-                    ->default(0)
-                     ])
-                //
+                Forms\Components\Card::make()->schema([
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255),
+
+                    Forms\Components\Textarea::make('subtitle')
+                        ->required()
+                        ->maxLength(500)
+                        ->columnSpanFull(),
+
+                    CloudinaryUpload::make('image')
+                        ->directory('les-renang/cms/hero')
+                        ->image()
+                        ->required()
+                        ->helperText('Rekomendasi ukuran: 1920x1080 px'),
+
+                    CloudinaryUpload::make('video_background')
+                        ->directory('les-renang/cms/hero')
+                        ->cloudinaryResourceType('video')
+                        ->acceptedFileTypes(['video/mp4'])
+                        ->helperText('Upload video MP4 (opsional)'),
+
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\TextInput::make('cta_text')
+                            ->label('Tombol Utama - Teks')
+                            ->default('Daftar Sekarang'),
+
+                        Forms\Components\TextInput::make('cta_link')
+                            ->label('Tombol Utama - Link')
+                            ->default('#programs'),
+                    ]),
+
+                    Forms\Components\Toggle::make('is_active')
+                        ->label('Aktif')
+                        ->default(true),
+
+                    Forms\Components\TextInput::make('order')
+                        ->numeric()
+                        ->default(0),
+                ]),
             ]);
     }
 
@@ -84,10 +89,11 @@ class HeroResource extends Resource
             Tables\Columns\IconColumn::make('is_active')
                 ->boolean()
                 ->label('Status'),
-                
+
             Tables\Columns\TextColumn::make('created_at')
-                ->dateTime('d M Y')
+                ->dateTime()
                 ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
         ])
         ->filters([
             Tables\Filters\Filter::make('active')
@@ -96,7 +102,6 @@ class HeroResource extends Resource
         ])
         ->actions([
             Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(),
         ])
         ->bulkActions([
             Tables\Actions\DeleteBulkAction::make(),

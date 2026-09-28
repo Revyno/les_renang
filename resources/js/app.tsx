@@ -9,11 +9,12 @@ const appName = 'Tirta Nirwana';
 
 createInertiaApp({
   title: (title) => (title ? `${title} — ${appName}` : appName),
+  // Lazy: each page becomes its own chunk, loaded on demand (keeps the initial bundle small).
   resolve: (name) => {
-    const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true });
-    const page = pages[`./Pages/${name}.tsx`];
-    if (!page) throw new Error(`Inertia page not found: ${name}`);
-    return page as { default: React.ComponentType };
+    const pages = import.meta.glob('./Pages/**/*.tsx');
+    const importPage = pages[`./Pages/${name}.tsx`];
+    if (!importPage) throw new Error(`Inertia page not found: ${name}`);
+    return importPage();
   },
   setup({ el, App, props }) {
     AOS.init({

@@ -17,14 +17,21 @@ class InstructorsResource extends Resource
     protected static ?string $model = Instructor::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationGroup = 'Menagement';
+    protected static ?string $navigationGroup = 'Manajemen Les';
+    protected static ?int $navigationSort = 6;
+    protected static ?string $navigationLabel = 'Instruktur';
+    protected static ?string $modelLabel = 'Instruktur';
+    protected static ?string $pluralModelLabel = 'Instruktur';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Card::make()
+                    ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->maxLength(255)
                     ->label('Nama'),
                     
                   
@@ -39,6 +46,7 @@ class InstructorsResource extends Resource
               
                     Forms\Components\TextInput::make('specialization')
                     ->required()
+                    ->maxLength(255)
                     ->label('Spesialisasi')
                     ->placeholder('Contoh: Renang Profesional'),
                     
@@ -54,24 +62,25 @@ class InstructorsResource extends Resource
                     ->default(0),
                     
                     Forms\Components\TextInput::make('telepon')
-                    ->required()
                     ->label('No. Telepon')
                     ->tel()
+                    ->maxLength(255)
                     ->placeholder('08123456789'),
 
 
                        Forms\Components\Textarea::make('bio')
                        ->required()
                        ->label('Bio')
-                       ->required(),
+                       ->columnSpanFull(),
 
                         CloudinaryUpload::make('photo')
                             ->required()
                             ->image()
                             ->directory('les-renang/cms/instructors')
-                            ->maxSize(1024),
-                        
-               
+                            ->maxSize(1024)
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -107,12 +116,13 @@ class InstructorsResource extends Resource
                 Tables\Columns\TextColumn::make('pengalaman_tahun')
                     ->label('Pengalaman (Tahun)'),
               
-               Tables\Columns\TextColumn::make('bio'),
+               Tables\Columns\TextColumn::make('bio')->limit(50),
 
                 Tables\Columns\ImageColumn::make('photo')->getStateUsing(fn ($record) => Media::url($record->photo))->circular(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable(),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 // bisa ditambahkan filter kalau mau

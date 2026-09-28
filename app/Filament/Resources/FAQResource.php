@@ -17,30 +17,31 @@ class FAQResource extends Resource
 {
     protected static ?string $model = FAQ::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-annotation';
+    protected static ?string $navigationIcon = 'heroicon-o-question-mark-circle';
     protected static ?string $navigationLabel = 'FAQ';
-    protected static ?string $navigationGroup = 'Menagement';
+    protected static ?string $navigationGroup = 'Konten Website';
+    protected static ?int $navigationSort = 15;
+    protected static ?string $modelLabel = 'FAQ';
+    protected static ?string $pluralModelLabel = 'FAQ';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('question')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\RichEditor::make('answer')
-                    ->label('Answer')
-                    ->required()
-                    ->maxLength(65535),
-                Forms\Components\Select::make('status')
-                    ->label('Status')
-                    ->options([
-                        '1' => 'Active',
-                        '0' => 'Inactive',
-                    ])
-                    // ->default('active')
-                    // ->required(),
-                //
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('question')
+                            ->label('Pertanyaan')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\RichEditor::make('answer')
+                            ->label('Jawaban')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\Toggle::make('status')
+                            ->label('Aktif')
+                            ->default(true),
+                    ]),
             ]);
     }
 
@@ -48,23 +49,22 @@ class FAQResource extends Resource
     {
         return $table
             ->columns([
-                //
                 Tables\Columns\TextColumn::make('question')
-                    ->label('Question')
+                    ->label('Pertanyaan')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('answer')
+                    ->label('Jawaban')
+                    ->html()
+                    ->limit(50),
+                Tables\Columns\IconColumn::make('status')
+                    ->label('Aktif')
+                    ->boolean()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
                     ->sortable()
-                    ->searchable(),
-                // Tables\Columns\TextColumn::make('answer')
-                //     ->label('Answer')
-                //     ->html()
-                //     ->limit(50),
-                // Tables\Columns\TextColumn::make('status')   
-                //     ->label('Status')
-                //     ->options([
-                //         '1' => 'Active',
-                //         '0' => 'Inactive',
-                //     ])
-                //     ->sortable()
-                //     ->searchable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -76,14 +76,14 @@ class FAQResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -91,5 +91,5 @@ class FAQResource extends Resource
             'create' => Pages\CreateFAQ::route('/create'),
             'edit' => Pages\EditFAQ::route('/{record}/edit'),
         ];
-    }    
+    }
 }

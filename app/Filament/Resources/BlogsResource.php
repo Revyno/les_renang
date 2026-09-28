@@ -20,34 +20,42 @@ class BlogsResource extends Resource
 {
     protected static ?string $model = Blogs::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-template';
-    protected static ?string $navigationGroup = 'Menagement';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static ?string $navigationGroup = 'Konten Website';
+    protected static ?int $navigationSort = 13;
+    protected static ?string $navigationLabel = 'Blog';
+    protected static ?string $modelLabel = 'Blog';
+    protected static ?string $pluralModelLabel = 'Blog';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-            Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-            Forms\Components\Select::make('categories_id')
-                    // ->relationship('categories', 'id')
-                    ->options(Categories::query()->pluck('name', 'id'))
-                    ->required(),
-            Forms\Components\RichEditor::make('description')
-                    ->label('Description')
-                    ->required()
-                    ->maxLength(65535),
-            Forms\Components\TextInput::make('short_desc')
-                    ->label('Short Description')
-                    ->required()
-                    ->maxLength(255),
-            CloudinaryUpload::make('imgUrl')
-                    ->label('Thumbnail')
-                    ->image()
-                    ->directory('les-renang/cms/blogs')
-                    ->required(),
-                
+                Forms\Components\Card::make()->schema([
+                    Forms\Components\Grid::make(2)->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('categories_id')
+                            ->label('Kategori')
+                            ->options(Categories::query()->pluck('name', 'id'))
+                            ->required(),
+                    ]),
+                    Forms\Components\TextInput::make('short_desc')
+                        ->label('Short Description')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\RichEditor::make('description')
+                        ->label('Description')
+                        ->required()
+                        ->minLength(25)
+                        ->columnSpanFull(),
+                    CloudinaryUpload::make('imgUrl')
+                        ->label('Thumbnail')
+                        ->image()
+                        ->directory('les-renang/cms/blogs')
+                        ->required(),
+                ]),
             ]);
     }
 
@@ -55,11 +63,17 @@ class BlogsResource extends Resource
     {
         return $table
             ->columns([
-                //
                 Tables\Columns\TextColumn::make('title')
                     ->label('Title')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('short_desc')
+                    ->label('Short Description')
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

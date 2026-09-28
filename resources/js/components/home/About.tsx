@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { cld, img } from '@/lib/media'
 import { useI18n } from '@/lib/i18n'
+import RichText from '@/components/RichText'
 import type { About as AboutData, GalleryItem } from '@/types/models'
 
 // Intro block + staggered 4-up gallery (reference "Kursus Renang Profesional" section).
@@ -31,7 +32,7 @@ export default function About({ data, gallery }: { data: AboutData | null; galle
         <h2 className="text-3xl font-medium leading-[1.12] tracking-tight text-foreground md:text-4xl lg:text-5xl">
           {title}
         </h2>
-        <p className="text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>
+        <RichText html={description} className="text-base leading-relaxed text-muted-foreground md:text-lg" />
         <Link
           href="/tentang"
           className="inline-flex h-12 items-center gap-2 rounded-full bg-brand-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-600"

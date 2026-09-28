@@ -26,7 +26,6 @@ export default function Footer() {
 
   const INFO = [
     { label: t('site.footer.articles'), href: '/blog' },
-    { label: t('nav.faq'), href: '/faq' },
     { label: t('site.footer.contact'), href: '/kontak' },
   ]
 

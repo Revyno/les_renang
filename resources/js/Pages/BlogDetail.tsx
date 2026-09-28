@@ -21,17 +21,17 @@ export default function BlogDetailPage({ meta, post, related }: Props) {
     <>
       <Seo title={meta.title} description={meta.description} image={post.image ?? undefined} />
 
-      <article className="mx-auto max-w-screen-2xl px-4 pt-28 md:px-10 md:pt-32">
+      <article className="mx-auto max-w-3xl px-4 pb-20 pt-28 md:pb-28 md:pt-32">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-brand-500"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-brand-500"
         >
           <ArrowLeft className="h-4 w-4" />
           {t('blog.backToBlog')}
         </Link>
 
-        <div className="mx-auto mt-6 flex max-w-3xl flex-col items-start gap-4" data-aos="fade-up">
-          <div className="flex items-center gap-3 text-sm">
+        <header className="mt-8 flex flex-col gap-5" data-aos="fade-up">
+          <div className="flex flex-wrap items-center gap-3 text-sm">
             {post.category && (
               <span className="inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600">
                 {post.category}
@@ -41,18 +41,18 @@ export default function BlogDetailPage({ meta, post, related }: Props) {
           </div>
           <h1 className="text-3xl font-medium leading-[1.1] tracking-tight text-foreground md:text-5xl">{post.title}</h1>
           {post.short_desc && <p className="text-lg leading-relaxed text-muted-foreground">{post.short_desc}</p>}
-        </div>
+        </header>
 
         <img
           src={img(post.image, 'working-1.jpg')}
           alt={post.title}
-          className="mx-auto mt-10 aspect-[16/9] w-full max-w-5xl rounded-4xl object-cover"
+          className="mt-10 aspect-[16/9] w-full rounded-3xl object-cover"
           data-aos="zoom-in"
         />
 
         {post.content && (
           <div
-            className="mx-auto mt-10 max-w-3xl space-y-5 text-lg leading-relaxed text-stone-700 [&_a]:text-brand-500 [&_a]:underline [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-foreground [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_img]:rounded-2xl [&_li]:ml-4 [&_ul]:list-disc"
+            className="mt-10 space-y-5 border-t border-stone-100 pt-10 text-lg leading-relaxed text-stone-700 [&_a]:text-brand-500 [&_a]:underline [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-medium [&_h2]:text-foreground [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_img]:rounded-2xl [&_li]:ml-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:m-0 [&_ul]:list-disc [&_ul]:pl-5"
             data-aos="fade-up"
             // Content authored by admins via the Filament editor (trusted source).
             dangerouslySetInnerHTML={{ __html: post.content }}

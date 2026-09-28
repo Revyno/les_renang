@@ -15,7 +15,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'User Management';
+    protected static ?string $navigationGroup = 'Pengaturan';
+    protected static ?int $navigationSort = 40;
+    protected static ?string $navigationLabel = 'Pengguna';
+    protected static ?string $modelLabel = 'Pengguna';
+    protected static ?string $pluralModelLabel = 'Pengguna';
 
     public static function form(Form $form): Form
     {
@@ -33,7 +37,7 @@ class UserResource extends Resource
                             ->unique(User::class, 'email', fn ($record) => $record),
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                            ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null)
                             ->dehydrated(fn ($state) => filled($state))
                             ->required(fn (string $context): bool => $context === 'create'),
                         Forms\Components\Select::make('role')
@@ -58,8 +62,9 @@ class UserResource extends Resource
                         'secondary' => 'student',
                     ]),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable(),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useI18n } from '@/lib/i18n'
+import RichText from '@/components/RichText'
 import type { Faq as FaqData } from '@/types/models'
 
 export default function Faq({ data }: { data: FaqData[] }) {
@@ -47,7 +48,7 @@ export default function Faq({ data }: { data: FaqData[] }) {
                   {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                 </span>
               </button>
-              {isOpen && <p className="px-6 pb-6 text-sm leading-relaxed text-muted-foreground md:text-base">{f.answer}</p>}
+              {isOpen && <RichText html={f.answer} className="px-6 pb-6 text-sm leading-relaxed text-muted-foreground md:text-base" />}
             </div>
           )
         })}

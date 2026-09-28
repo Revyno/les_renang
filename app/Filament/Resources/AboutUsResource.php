@@ -19,29 +19,34 @@ class AboutUsResource extends Resource
 {
     protected static ?string $model = AboutUs::class;
 
-    protected static ?string $navigationGroup = 'Menagement';
-    protected static ?string $navigationLabel = 'About Us';
+    protected static ?string $navigationGroup = 'Konten Website';
+    protected static ?int $navigationSort = 11;
+    protected static ?string $navigationLabel = 'Tentang Kami';
     protected static ?string $navigationIcon = 'heroicon-o-information-circle';
+    protected static ?string $modelLabel = 'Tentang Kami';
+    protected static ?string $pluralModelLabel = 'Tentang Kami';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Card::make()->schema([
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255),
 
-                Forms\Components\RichEditor::make('description')
-                    ->label('Description')
-                    // ->colomnSpan('2')
-                    ->required()
-                    ->maxLength(100),
+                    Forms\Components\RichEditor::make('description')
+                        ->label('Description')
+                        ->required()
+                        ->minLength(25)
+                        ->columnSpanFull(),
 
-                CloudinaryUpload::make('img')
-                    ->label('Thumbnail')
-                    ->image()
-                    ->directory('les-renang/cms/about')
-                    ->required(),
+                    CloudinaryUpload::make('img')
+                        ->label('Thumbnail')
+                        ->image()
+                        ->directory('les-renang/cms/about')
+                        ->required(),
+                ]),
             ]);
     }
 
@@ -61,23 +66,10 @@ class AboutUsResource extends Resource
             Tables\Columns\ImageColumn::make('img')
                 ->label('Thumbnail')
                 ->getStateUsing(fn ($record) => Media::url($record->img)),
-                // Forms\Components\TextInput::make('title')
-                //     ->label('Title'),
-                //     // ->sortable(),
-                //     // ->searchable(),
-                // Forms\Components\RichEditor::make('description')
-                //     ->label('Description'),
-                //     // ->sortable(),
-                //     // ->searchable(),
-                // Forms\Components\FileUpload::make('img')  
-                //     ->label('Thumbnail')
-                    // ->disk('public')
-                    // ->directory('aboutus/thumbnails')
-
-            //         ->sortable()
-            //         ->searchable()
-            //         ->formatStateUsing(fn ($state) => '<img src="' . asset('storage/' . $state) . '" width="50" height="50" />')
-            //         ->html(),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -21,20 +21,28 @@ class CategoriesResource extends Resource
 {
     protected static ?string $model = Categories::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationGroup = 'Konten Website';
+    protected static ?int $navigationSort = 14;
+    protected static ?string $navigationLabel = 'Kategori';
+    protected static ?string $modelLabel = 'Kategori';
+    protected static ?string $pluralModelLabel = 'Kategori';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                ->reactive()
-                ->afterStateUpdated(fn (Closure $set, ?string $state) => $set('slug', Str::slug($state))),
-    
-                TextInput::make('slug')
+                Forms\Components\Card::make()->schema([
+                    TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)
+                        ->reactive()
+                        ->afterStateUpdated(fn (Closure $set, ?string $state) => $set('slug', Str::slug($state))),
 
-
-
+                    TextInput::make('slug')
+                        ->required()
+                        ->maxLength(255),
+                ]),
             ]);
     }
 
@@ -42,7 +50,16 @@ class CategoriesResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('slug')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -51,9 +68,7 @@ class CategoriesResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 

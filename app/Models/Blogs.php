@@ -10,14 +10,14 @@ class Blogs extends Model
     use HasFactory;
     protected $fillable = [
         'title',
+        'short_desc',
+        'description',
+        'imgUrl',
         'categories_id',
-        'author',
-        'image',
-        'content',
-        'status',
     ];
-    protected function categories() {
-        return $this->belongsTo(Blogs::class, 'blog_id');
+
+    public function categories()
+    {
+        return $this->belongsTo(Categories::class, 'categories_id');
     }
-     
 }

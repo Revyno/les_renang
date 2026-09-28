@@ -18,10 +18,12 @@ use PhpOffice\PhpSpreadsheet\Calculation\Financial\CashFlow\Constant\Periodic\Pa
 class IncomesResource extends Resource
 {
     protected static ?string $model = Income::class;
-    protected static ?string $navigationLabel = 'Income';
-    protected static ?string $navigationGroup = 'Revenues';
-
+    protected static ?string $navigationLabel = 'Pemasukan';
+    protected static ?string $navigationGroup = 'Keuangan';
+    protected static ?int $navigationSort = 30;
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
+    protected static ?string $modelLabel = 'Pemasukan';
+    protected static ?string $pluralModelLabel = 'Pemasukan';
 
     public static function form(Form $form): Form
     {
@@ -102,19 +104,28 @@ class IncomesResource extends Resource
        return $table
             ->columns([
                 Tables\Columns\TextColumn::make('payment.registration.user.name')
-                    ->label('Siswa'),
+                    ->label('Siswa')
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('payment.amount')
-                    ->money('IDR', true)
-                    ->label('Jumlah Kotor'),
+                    ->money('idr', true)
+                    ->label('Jumlah Kotor')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('net_income')
-                    ->money('IDR', true)
-                    ->label('Pendapatan Bersih'),
+                    ->money('idr', true)
+                    ->label('Pendapatan Bersih')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('income_date')
                     ->date('d M Y')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\Filter::make('income_date')

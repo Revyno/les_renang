@@ -3,6 +3,9 @@
 # ---- Stage 1: build frontend assets (Vite / React / Tailwind) ----
 FROM node:20-alpine AS assets
 WORKDIR /app
+# Cloudinary cloud name is baked into the JS bundle at build time (Vite import.meta.env)
+ARG VITE_CLOUDINARY_CLOUD_NAME=
+ENV VITE_CLOUDINARY_CLOUD_NAME=$VITE_CLOUDINARY_CLOUD_NAME
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

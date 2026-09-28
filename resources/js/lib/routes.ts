@@ -25,5 +25,4 @@ export const navItems: NavItem[] = [
     { label: 'Layanan', href: routes.services() },
     { label: 'Tim', href: routes.team() },
     { label: 'Blog', href: routes.blogs() },
-    { label: 'FAQ', href: routes.faq() },
 ];

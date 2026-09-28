@@ -22,9 +22,12 @@ class PaymentsResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
-    protected static ?string $navigationLabel = 'Payment';
-    protected static ?string $navigationGroup = 'Revenues';
+    protected static ?string $navigationLabel = 'Pembayaran';
+    protected static ?string $navigationGroup = 'Keuangan';
+    protected static ?int $navigationSort = 31;
     protected static ?string $navigationIcon = 'heroicon-o-cash';
+    protected static ?string $modelLabel = 'Pembayaran';
+    protected static ?string $pluralModelLabel = 'Pembayaran';
 
   
     public static function form(Form $form): Form
@@ -99,7 +102,7 @@ class PaymentsResource extends Resource
                     ->label('Kelas'),
 
                 Tables\Columns\TextColumn::make('amount')
-                    ->money('IDR', true)
+                    ->money('idr', true)
                     ->sortable(),
 
                 Tables\Columns\BadgeColumn::make('status')
@@ -118,7 +121,12 @@ class PaymentsResource extends Resource
 
                 Tables\Columns\TextColumn::make('paid_at')
                     ->dateTime('d M Y H:i')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
                     ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')

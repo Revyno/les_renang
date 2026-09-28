@@ -24,16 +24,19 @@ class JadwalLesResource extends Resource
     protected static ?string $model = Classes::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
-    protected static ?string $navigationLabel = 'Classes';
-    protected static ?string $navigationGroup = 'Menagement';
-    
+    protected static ?string $navigationLabel = 'Jadwal Les';
+    protected static ?string $navigationGroup = 'Manajemen Les';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $modelLabel = 'Jadwal Les';
+    protected static ?string $pluralModelLabel = 'Jadwal Les';
+
 
     public static function form(Form $form): Form
     {
         return $form
-        
             ->schema([
-                
+                Forms\Components\Card::make()
+                    ->schema([
               Forms\Components\Select::make('instructors')
                      ->label('Instruktur')
                      ->multiple()
@@ -43,6 +46,7 @@ class JadwalLesResource extends Resource
                      ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
+                    ->maxLength(255)
                     ->label('Nama Kelas'),
                 // Forms\Components\DatePicker::make('schedule_date')
                 //     ->required()
@@ -64,9 +68,10 @@ class JadwalLesResource extends Resource
                 Forms\Components\Textarea::make('description')
                 ->rows(10)
                 ->cols(20)
-                ->minLength(5)
-                ->maxLength(500)
+                ->minLength(25)
+                ->maxLength(5000)
                 ->required()
+                ->columnSpanFull()
                 ->label('Deskripsi'),
 
                 Forms\Components\TextInput::make('price')
@@ -102,8 +107,8 @@ class JadwalLesResource extends Resource
                             ->numeric()
                             ->required()
                             ->label('Durasi (Minggu)'),
-
-
+                    ])
+                    ->columns(2),
     ]);
            
     }
@@ -112,7 +117,7 @@ class JadwalLesResource extends Resource
     {
         return $table
                 ->columns([
-                    Tables\Columns\TextColumn::make('title')->label('Nama Kelas')->searchable(),
+                    Tables\Columns\TextColumn::make('title')->label('Nama Kelas')->searchable()->sortable(),
                     
                     Tables\Columns\TextColumn::make('instructors.name')
                         ->label('Instruktur')
@@ -145,8 +150,9 @@ class JadwalLesResource extends Resource
 
                     Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable(),
-                    
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
             ])
             ->filters([
                 //

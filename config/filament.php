@@ -235,7 +235,7 @@ return [
         'forms' => [
             'actions' => [
                 'alignment' => 'left',
-                'are_sticky' => false,
+                'are_sticky' => true,
             ],
             'have_inline_labels' => false,
         ],
@@ -248,7 +248,7 @@ return [
             'alignment' => 'right',
         ],
         'sidebar' => [
-            'is_collapsible_on_desktop' => false,
+            'is_collapsible_on_desktop' => true,
             'groups' => [
                 'are_collapsible' => true,
             ],

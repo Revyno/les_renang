@@ -14,22 +14,24 @@ class Enrollment extends Model
 
     // Menentukan field mana yang bisa diisi (mass assignable)
     protected $fillable = [
-        // 'student_id',
-        // 'classes_id',
-        // 'program_id',
-        // 'instructor_id',
+        'registration_id',
+        'class_id',
+        'program_id',
+        'instructor_id',
         'status',
         'payment_status',
-        'created_at',
     ];
 
-    // Relasi dengan model Student
-  
+    // Relasi dengan model Registration
+    public function registration()
+    {
+        return $this->belongsTo(Registration::class);
+    }
 
     // Relasi dengan model Classes
     public function classes()
     {
-        return $this->belongsTo(Classes::class, 'classes_id');
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 
     // Relasi dengan model Program

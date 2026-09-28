@@ -20,12 +20,17 @@ class RegistrationResource extends Resource
     protected static ?string $model = Registration::class;
     protected static ?string $navigationIcon = 'heroicon-o-pencil-alt';
     protected static ?string $navigationLabel = 'Registrasi';
-    protected static ?string $navigationGroup = 'Menagement';
+    protected static ?string $navigationGroup = 'Manajemen Les';
+    protected static ?int $navigationSort = 3;
+    protected static ?string $modelLabel = 'Registrasi';
+    protected static ?string $pluralModelLabel = 'Registrasi';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Card::make()
+                    ->schema([
                 Forms\Components\Select::make('user_id')
                     ->options(User::pluck('name', 'id')->all())
                     ->searchable()
@@ -111,6 +116,8 @@ class RegistrationResource extends Resource
                     ])
                     ->default('unpaid')
                     ->required(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -135,7 +142,8 @@ class RegistrationResource extends Resource
 
                 Tables\Columns\TextColumn::make('student_name')
                     ->label('Student Name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
 
                 Tables\Columns\ImageColumn::make('student_photo')
                     ->label('Photo')
@@ -174,6 +182,11 @@ class RegistrationResource extends Resource
                         'warning' => 'pending',
                         'success' => 'paid',
                     ]),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->headerActions([
                 Tables\Actions\Action::make('export')

@@ -16,10 +16,12 @@ use Filament\Tables;
 class ProgramsResource extends Resource
 {
     protected static ?string $model = Program::class;
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
-    protected static ?string $navigationGroup = 'Menagement';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
+    protected static ?string $navigationGroup = 'Manajemen Les';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel = 'Program';
     protected static ?string $modelLabel = 'Program';
-    protected static ?string $pluralModelLabel = 'Programs';
+    protected static ?string $pluralModelLabel = 'Program';
 
     public static function form(Form $form): Form
     {
@@ -103,7 +105,9 @@ class ProgramsResource extends Resource
                         //     ->required(),
                             
                         Forms\Components\Textarea::make('description')
-                            ->columnSpan('full'),
+                            ->minLength(25)
+                            ->maxLength(5000)
+                            ->columnSpanFull(),
                             
                         CloudinaryUpload::make('thumbnail')
                             ->label('Thumbnail')
@@ -152,28 +156,24 @@ class ProgramsResource extends Resource
                 Tables\Columns\TextColumn::make('end_time')
                     ->time(),
                     
-                Tables\Columns\TextColumn::make('level'),
-                    
                 Tables\Columns\TextColumn::make('capacity')
                 ->label('Kapasitas'),
-                    
-                Tables\Columns\IconColumn::make('is_active')
+
+                Tables\Columns\IconColumn::make('toggle')
                     ->label('Status')
                     ->boolean()
                      ->trueIcon('heroicon-o-check')
                      ->falseIcon('heroicon-o-x')
                     ->trueColor('success')
                     ->falseColor('danger'),
-                    
-                Tables\Columns\TextColumn::make('formatted_price')
-                    ->label('Price'),
-                    
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable(),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('is_active')
+                Tables\Filters\TernaryFilter::make('toggle')
                     ->label('Active Status')
                     ->placeholder('All')
                     ->trueLabel('Active')

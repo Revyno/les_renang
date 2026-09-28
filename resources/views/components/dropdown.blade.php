@@ -23,7 +23,7 @@ switch ($width) {
 
 <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
     <div @click="open = ! open">
-        {{ $trigger }}
+        {{ $trigger ?? '' }}
     </div>
 
     <div x-show="open"
@@ -37,7 +37,7 @@ switch ($width) {
             style="display: none;"
             @click="open = false">
         <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
-            {{ $content }}
+            {{ $content ?? '' }}
         </div>
     </div>
 </div>

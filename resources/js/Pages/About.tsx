@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { img, cld } from '@/lib/media'
 import { BRAND } from '@/lib/brand'
 import { useI18n } from '@/lib/i18n'
+import RichText from '@/components/RichText'
 import type { About as AboutData, Stat, Instructor } from '@/types/models'
 
 interface Props {
@@ -74,7 +75,7 @@ export default function AboutPage({ meta, about, instructors }: Props) {
           <h2 className="text-3xl font-medium leading-tight tracking-tight text-foreground md:text-4xl">
             {t('about.storyTitle')}
           </h2>
-          <p className="whitespace-pre-line text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>
+          <RichText html={description} className="text-base leading-relaxed text-muted-foreground md:text-lg" />
         </div>
         <div className="overflow-hidden rounded-4xl bg-stone-100" data-aos="fade-left">
           <img

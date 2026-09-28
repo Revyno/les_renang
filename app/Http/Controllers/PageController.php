@@ -43,17 +43,6 @@ class PageController extends Controller
         ]);
     }
 
-    public function faq(): Response
-    {
-        return Inertia::render('Faq', [
-            'meta' => [
-                'title' => 'FAQ',
-                'description' => 'Pertanyaan yang sering diajukan seputar pendaftaran, jadwal, dan program renang Tirta Nirwana.',
-            ],
-            'faqs' => Content::faqs(),
-        ]);
-    }
-
     public function blog(): Response
     {
         $blogs = Blogs::query()->latest('id')->paginate(9)

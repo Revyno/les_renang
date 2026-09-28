@@ -19,16 +19,25 @@ class GalleryResource extends Resource
 {
     protected static ?string $model = Gallery::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
-    protected static ?string $navigationGroup = 'Media Management';
+    protected static ?string $navigationIcon = 'heroicon-o-camera';
+    protected static ?string $navigationLabel = 'Galeri';
+    protected static ?string $navigationGroup = 'Konten Website';
+    protected static ?int $navigationSort = 16;
+    protected static ?string $modelLabel = 'Galeri';
+    protected static ?string $pluralModelLabel = 'Galeri';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
-                Forms\Components\TextInput::make('title')->required(),
-                CloudinaryUpload::make('image')->image()->directory('les-renang/cms/gallery'),
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->label('Judul')
+                            ->required()
+                            ->maxLength(255),
+                        CloudinaryUpload::make('image')->image()->directory('les-renang/cms/gallery'),
+                    ]),
             ]);
     }
 
@@ -36,9 +45,15 @@ class GalleryResource extends Resource
     {
         return $table
             ->columns([
-                //
-                Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\ImageColumn::make('image')->getStateUsing(fn ($record) => Media::url($record->image)),
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Judul')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -50,14 +65,14 @@ class GalleryResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -65,5 +80,5 @@ class GalleryResource extends Resource
             'create' => Pages\CreateGallery::route('/create'),
             'edit' => Pages\EditGallery::route('/{record}/edit'),
         ];
-    }    
+    }
 }

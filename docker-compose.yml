@@ -3,6 +3,8 @@ services:
     build:
       context: .
       target: app
+      args:
+        VITE_CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
     image: tirtanirwana-app
     restart: unless-stopped
     ports:
@@ -24,6 +26,10 @@ services:
       SESSION_DRIVER: file
       CACHE_STORE: file
       QUEUE_CONNECTION: sync
+
+      FILESYSTEM_DISK: ${FILESYSTEM_DISK:-local}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_URL: ${CLOUDINARY_URL:-}
 
       MAIL_MAILER: ${MAIL_MAILER:-log}
       MAIL_HOST: ${MAIL_HOST:-}
