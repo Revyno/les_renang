@@ -78,8 +78,12 @@ class Registration extends Model
      */
     public function getPaymentStatusAttribute()
     {
-        $totalPaid = $this->totalPaid();
-        $totalDue = $this->class->price;
+        // Use eager-loaded payments when present (list views) to avoid a per-row
+        // sum query; fall back to a direct query when the relation isn't loaded.
+        $totalPaid = $this->relationLoaded('payments')
+            ? $this->payments->where('status', 'paid')->sum('amount')
+            : $this->totalPaid();
+        $totalDue = optional($this->class)->price ?? 0;
 
         if ($totalPaid >= $totalDue) {
             return 'Lunas';

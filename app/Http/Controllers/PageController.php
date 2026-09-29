@@ -45,7 +45,7 @@ class PageController extends Controller
 
     public function blog(): Response
     {
-        $blogs = Blogs::query()->latest('id')->paginate(9)
+        $blogs = Blogs::query()->with('categories')->latest('id')->paginate(9)
             ->through(fn (Blogs $b) => Content::blogCard($b))
             ->withQueryString();
 
@@ -60,6 +60,7 @@ class PageController extends Controller
 
     public function blogShow(Blogs $blog): Response
     {
+        $blog->loadMissing('categories');
         $desc = Str::limit(trim(strip_tags((string) ($blog->short_desc ?: $blog->description))), 150);
 
         return Inertia::render('BlogDetail', [

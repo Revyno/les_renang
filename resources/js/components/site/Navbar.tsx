@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BRAND } from '@/lib/brand'
 import { useI18n, LanguageToggle } from '@/lib/i18n'
-import type { SharedProps } from '@/types/models'
 
 const NAV = [
   { key: 'nav.home', href: '/' },
@@ -16,9 +15,8 @@ const NAV = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const { url, props } = usePage<SharedProps>()
+  const { url } = usePage()
   const { t } = useI18n()
-  const user = props.auth?.user
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -82,23 +80,6 @@ export default function Navbar() {
         {/* Actions */}
         <div className="hidden items-center gap-2.5 md:flex">
           <LanguageToggle onDark={onHero} />
-          {user ? (
-            <Link
-              href="/logout"
-              method="post"
-              as="button"
-              className={cn('text-sm font-medium', onHero ? 'text-white/90 hover:text-white' : 'text-foreground/80 hover:text-brand-500')}
-            >
-              {t('nav.logout')}
-            </Link>
-          ) : (
-            <Link
-              href="/login"
-              className={cn('text-sm font-medium', onHero ? 'text-white/90 hover:text-white' : 'text-foreground/80 hover:text-brand-500')}
-            >
-              {t('nav.login')}
-            </Link>
-          )}
           <Link
             href="/daftar"
             className="flex h-11 items-center rounded-full bg-brand-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
@@ -138,15 +119,6 @@ export default function Navbar() {
               <div className="px-4 py-1">
                 <LanguageToggle />
               </div>
-              {user ? (
-                <Link href="/logout" method="post" as="button" onClick={() => setOpen(false)} className="px-4 py-2 text-left text-sm font-medium text-foreground/80">
-                  {t('nav.logout')}
-                </Link>
-              ) : (
-                <Link href="/login" onClick={() => setOpen(false)} className="px-4 py-2 text-sm font-medium text-foreground/80">
-                  {t('nav.login')}
-                </Link>
-              )}
               <Link
                 href="/daftar"
                 onClick={() => setOpen(false)}

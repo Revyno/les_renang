@@ -140,6 +140,11 @@ class EnrollmentResource extends Resource
             ]);
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['program', 'instructor']);
+    }
+
     public static function getPages(): array
     {
         return [

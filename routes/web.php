@@ -1,7 +1,6 @@
 <?php
 
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
@@ -28,24 +27,12 @@ Route::get('/kontak', [PageController::class, 'contact'])->name('contact');
 Route::post('/kontak', [PageController::class, 'contactStore'])->name('contact.store');
 Route::get('/daftar', [PageController::class, 'daftar'])->name('daftar');
 
-// Auth (session-based, public site). Separate from Filament /admin guard.
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-});
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
-
 // SEO: robots + sitemap (dynamic so the domain follows APP_URL / the request host).
 Route::get('/robots.txt', function () {
     $body = implode("\n", [
         'User-agent: *',
         'Allow: /',
         'Disallow: /admin',
-        'Disallow: /login',
-        'Disallow: /register',
-        'Disallow: /logout',
         'Disallow: /livewire',
         '',
         'Sitemap: ' . url('/sitemap.xml'),

@@ -165,6 +165,11 @@ class PaymentsResource extends Resource
             ]);
     }
     
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['registration.user', 'registration.class']);
+    }
+
     public static function getRelations(): array
     {
         return [

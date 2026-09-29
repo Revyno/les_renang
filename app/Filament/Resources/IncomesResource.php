@@ -150,6 +150,11 @@ class IncomesResource extends Resource
             
     }
     
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['payment.registration.user']);
+    }
+
     public static function getRelations(): array
     {
         return [

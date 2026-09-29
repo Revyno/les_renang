@@ -252,6 +252,13 @@ class RegistrationResource extends Resource
             ]);
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        // Eager-load list relations + payments so the payment_status accessor
+        // (sums payments, reads class->price) never fires a query per row.
+        return parent::getEloquentQuery()->with(['user', 'class', 'program', 'payments']);
+    }
+
     public static function getRelations(): array
     {
         return [

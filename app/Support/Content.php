@@ -4,7 +4,6 @@ namespace App\Support;
 
 use App\Models\AboutUs;
 use App\Models\Blogs;
-use App\Models\Categories;
 use App\Models\client;
 use App\Models\contact;
 use App\Models\FAQ;
@@ -135,7 +134,7 @@ class Content
 
     public static function blogs(int $take = 3): array
     {
-        return Blogs::query()->latest('id')->take($take)->get()
+        return Blogs::query()->with('categories')->latest('id')->take($take)->get()
             ->map(fn ($b) => self::blogCard($b))->all();
     }
 
@@ -147,7 +146,7 @@ class Content
             'title' => $b->title,
             'image' => Media::url($b->imgUrl),
             'excerpt' => Str::limit(trim(strip_tags((string) ($b->short_desc ?: $b->description))), 140),
-            'category' => optional(Categories::find($b->categories_id))->name,
+            'category' => optional($b->categories)->name,
             'date' => optional($b->created_at)->translatedFormat('d M Y'),
         ];
     }
@@ -161,7 +160,7 @@ class Content
             'image' => Media::url($b->imgUrl),
             'short_desc' => $b->short_desc,
             'content' => $b->description,
-            'category' => optional(Categories::find($b->categories_id))->name,
+            'category' => optional($b->categories)->name,
             'date' => optional($b->created_at)->translatedFormat('d M Y'),
         ];
     }

@@ -15,7 +15,8 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login');
+            // Student login removed; the only auth surface is the Filament admin panel.
+            return url(config('filament.path', 'admin') . '/login');
         }
     }
 }
