@@ -1,0 +1,38 @@
+# Excludes for the cPanel deploy archive (tar -X). Patterns match archive member
+# paths (no leading ./). Disk is untouched; these are only kept OUT of deploy.tar.gz.
+
+# --- Never needed on the server ---
+.git
+.github
+node_modules
+tests
+.vscode
+.idea
+deploy/deploy.tar.gz
+
+# --- Regenerated on the server / runtime junk ---
+storage/logs/*.log
+storage/app/livewire-tmp
+storage/framework/cache/data
+storage/framework/sessions
+storage/framework/views
+
+# --- Local build sources (public/build is already compiled & shipped) ---
+resources/js
+resources/css
+
+# --- Dev-only vendor cruft & source maps (not used at runtime) ---
+vendor/laravel/pint
+*.map
+
+# --- Cloudinary-only image sources ---
+# React serves these via Cloudinary CDN (cld('teacher/...')); server never reads
+# them. Blade only needs vid1.mp4 + abo-1.jpg, which are NOT matched and stay.
+public/assets/img/teacher/IMG_*
+public/assets/img/teacher/IMG20230903085529.jpg
+public/assets/img/teacher/20*
+public/assets/img/teacher/Gambar*
+public/assets/img/teacher/LOGO.jpg
+public/assets/img/teacher/logo no background.png
+public/assets/img/IMG_3383.JPG
+public/front/images/IMG_3383.JPG
